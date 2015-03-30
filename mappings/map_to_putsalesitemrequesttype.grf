@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?><Graph __version="3.5.0" author="Admin" created="Fri Mar 27 07:24:37 CET 2015" description="Map To PutSalesItemRequestType" guiVersion="3.4.4.P" id="1427439010841" licenseCode="Unlicensed" licenseType="Unknown" modified="Fri Mar 27 07:24:37 CET 2015" modifiedBy="Admin" name="Map_To_PutSalesItemRequestType" revision="1.0" showComponentDetails="false">
+<Global>
+<Metadata __index="0" __referenceCounter="3" __sourcePath="{}/data" _dataStructure="OBJECT" _id="__id" _type="Input" id="243254a7-bd28-410a-8c01-30495be7449e">
+<Record fieldDelimiter="," name="data" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __index="0" __sourcePath="{}/data/name" containerType="SINGLE" label="name" name="field_0" type="string"/>
+<Field __index="1" __sourcePath="{}/data/unitPrice" containerType="SINGLE" label="unitPrice" length="12" name="field_1" scale="2" type="decimal"/>
+<Field __sourcePath="{}/data/description" containerType="SINGLE" label="description" name="description" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="2" __referenceCounter="1" __sourcePath="{}/object/salesItemData/currencyReference/ID" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="60e0dc64-5b88-4714-9855-01866fd664b7" _parent_id="__parent_id" _type="Output" id="51d8bbd2-c61b-47b9-83e9-92d6bdef34fe">
+<Record fieldDelimiter="," name="ID" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __artificialType="_parent_id" __systemManaged="true" name="__parent_id" type="string"/>
+<Field __index="2" __sourcePath="{}/object/salesItemData/currencyReference/ID/type" containerType="SINGLE" label="type" name="type" type="string"/>
+<Field __index="3" __sourcePath="{}/object/salesItemData/currencyReference/ID/value" containerType="SINGLE" label="value" name="value" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="12" __referenceCounter="0" __sourcePath="{}/object/salesItemData/priceTypeReference/ID" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="60e0dc64-5b88-4714-9855-01866fd664b7" _parent_id="__parent_id" _type="Output" id="faf7a7e8-9827-4294-b023-58a2b8ee643e">
+<Record fieldDelimiter="," name="ID" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __artificialType="_parent_id" __systemManaged="true" name="__parent_id" type="string"/>
+<Field __index="12" __sourcePath="{}/object/salesItemData/priceTypeReference/ID/type" containerType="SINGLE" label="type" name="type" type="string"/>
+<Field __index="13" __sourcePath="{}/object/salesItemData/priceTypeReference/ID/value" containerType="SINGLE" label="value" name="value" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="15" __referenceCounter="0" __sourcePath="{}/object/salesItemData/projectTemplateReference/ID" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="60e0dc64-5b88-4714-9855-01866fd664b7" _parent_id="__parent_id" _type="Output" id="c79c5a2c-8bb8-4c81-bdfb-6bef657a9886">
+<Record fieldDelimiter="," name="ID" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __artificialType="_parent_id" __systemManaged="true" name="__parent_id" type="string"/>
+<Field __index="15" __sourcePath="{}/object/salesItemData/projectTemplateReference/ID/type" containerType="SINGLE" label="type" name="type" type="string"/>
+<Field __index="16" __sourcePath="{}/object/salesItemData/projectTemplateReference/ID/value" containerType="SINGLE" label="value" name="value" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="18" __referenceCounter="0" __sourcePath="{}/object/salesItemData/relatedWorktagsReference/ID" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="6d98815c-bc1b-476f-b753-164993c143d4" _parent_id="__parent_id" _type="Output" id="1230982e-7b1c-41e9-9c87-471bec8d7268">
+<Record fieldDelimiter="," name="ID" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __artificialType="_parent_id" __systemManaged="true" name="__parent_id" type="string"/>
+<Field __index="18" __sourcePath="{}/object/salesItemData/relatedWorktagsReference/ID/type" containerType="SINGLE" label="type" name="type" type="string"/>
+<Field __index="19" __sourcePath="{}/object/salesItemData/relatedWorktagsReference/ID/value" containerType="SINGLE" label="value" name="value" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="21" __referenceCounter="1" __sourcePath="{}/object/salesItemData/revenueCategoryReference/ID" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="60e0dc64-5b88-4714-9855-01866fd664b7" _parent_id="__parent_id" _type="Output" id="8f803485-d33c-449e-a405-70292b09fe74">
+<Record fieldDelimiter="," name="ID" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __artificialType="_parent_id" __systemManaged="true" name="__parent_id" type="string"/>
+<Field __index="21" __sourcePath="{}/object/salesItemData/revenueCategoryReference/ID/type" containerType="SINGLE" label="type" name="type" type="string"/>
+<Field __index="22" __sourcePath="{}/object/salesItemData/revenueCategoryReference/ID/value" containerType="SINGLE" label="value" name="value" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="24" __referenceCounter="0" __sourcePath="{}/object/salesItemData/revenueRecognitionMethodReference/ID" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="60e0dc64-5b88-4714-9855-01866fd664b7" _parent_id="__parent_id" _type="Output" id="078f93de-a231-493f-b5a5-b5e4f45214de">
+<Record fieldDelimiter="," name="ID" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __artificialType="_parent_id" __systemManaged="true" name="__parent_id" type="string"/>
+<Field __index="24" __sourcePath="{}/object/salesItemData/revenueRecognitionMethodReference/ID/type" containerType="SINGLE" label="type" name="type" type="string"/>
+<Field __index="25" __sourcePath="{}/object/salesItemData/revenueRecognitionMethodReference/ID/value" containerType="SINGLE" label="value" name="value" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="27" __referenceCounter="0" __sourcePath="{}/object/salesItemData/salesItemGroupReference/ID" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="1cff53c3-5f78-486c-9db1-51cc485b1bbf" _parent_id="__parent_id" _type="Output" id="1977df24-208a-4b73-b976-7b70a8924e2f">
+<Record fieldDelimiter="," name="ID" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __artificialType="_parent_id" __systemManaged="true" name="__parent_id" type="string"/>
+<Field __index="27" __sourcePath="{}/object/salesItemData/salesItemGroupReference/ID/type" containerType="SINGLE" label="type" name="type" type="string"/>
+<Field __index="28" __sourcePath="{}/object/salesItemData/salesItemGroupReference/ID/value" containerType="SINGLE" label="value" name="value" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="31" __referenceCounter="0" __sourcePath="{}/object/salesItemData/taxApplicabilityReference/ID" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="60e0dc64-5b88-4714-9855-01866fd664b7" _parent_id="__parent_id" _type="Output" id="42ac586b-760b-4500-abe1-cd608a6e8a43">
+<Record fieldDelimiter="," name="ID" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __artificialType="_parent_id" __systemManaged="true" name="__parent_id" type="string"/>
+<Field __index="31" __sourcePath="{}/object/salesItemData/taxApplicabilityReference/ID/type" containerType="SINGLE" label="type" name="type" type="string"/>
+<Field __index="32" __sourcePath="{}/object/salesItemData/taxApplicabilityReference/ID/value" containerType="SINGLE" label="value" name="value" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="35" __referenceCounter="0" __sourcePath="{}/object/salesItemData/unitOfMeasure2Reference/ID" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="60e0dc64-5b88-4714-9855-01866fd664b7" _parent_id="__parent_id" _type="Output" id="c43ebf37-d463-4213-8d71-ddeb8c8d4aac">
+<Record fieldDelimiter="," name="ID" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __artificialType="_parent_id" __systemManaged="true" name="__parent_id" type="string"/>
+<Field __index="35" __sourcePath="{}/object/salesItemData/unitOfMeasure2Reference/ID/type" containerType="SINGLE" label="type" name="type" type="string"/>
+<Field __index="36" __sourcePath="{}/object/salesItemData/unitOfMeasure2Reference/ID/value" containerType="SINGLE" label="value" name="value" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="38" __referenceCounter="0" __sourcePath="{}/object/salesItemData/unitOfMeasureReference/ID" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="60e0dc64-5b88-4714-9855-01866fd664b7" _parent_id="__parent_id" _type="Output" id="4103c647-42fe-468f-88fc-79bfdc1fea25">
+<Record fieldDelimiter="," name="ID" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __artificialType="_parent_id" __systemManaged="true" name="__parent_id" type="string"/>
+<Field __index="38" __sourcePath="{}/object/salesItemData/unitOfMeasureReference/ID/type" containerType="SINGLE" label="type" name="type" type="string"/>
+<Field __index="39" __sourcePath="{}/object/salesItemData/unitOfMeasureReference/ID/value" containerType="SINGLE" label="value" name="value" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="42" __referenceCounter="0" __sourcePath="{}/object/salesItemReference/ID" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="60e0dc64-5b88-4714-9855-01866fd664b7" _parent_id="__parent_id" _type="Output" id="01a27e4b-4af8-4cae-b102-7b44d09d3ec8">
+<Record fieldDelimiter="," name="ID" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __artificialType="_parent_id" __systemManaged="true" name="__parent_id" type="string"/>
+<Field __index="42" __sourcePath="{}/object/salesItemReference/ID/type" containerType="SINGLE" label="type" name="type" type="string"/>
+<Field __index="43" __sourcePath="{}/object/salesItemReference/ID/value" containerType="SINGLE" label="value" name="value" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="0" __referenceCounter="1" __sourcePath="{}/object" _dataStructure="OBJECT" _id="__id" _type="Output" id="60e0dc64-5b88-4714-9855-01866fd664b7">
+<Record fieldDelimiter="," name="PutSalesItemRequestType" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __index="0" __sourcePath="{}/object/addOnly" containerType="SINGLE" label="addOnly" name="addOnly" type="boolean"/>
+<Field __index="1" __sourcePath="{}/object/salesItemData/VSOEPrice" containerType="SINGLE" label="VSOEPrice" name="VSOEPrice" type="decimal"/>
+<Field __index="4" __sourcePath="{}/object/salesItemData/currencyReference/descriptor" containerType="SINGLE" label="descriptor" name="descriptor" type="string"/>
+<Field __index="5" __sourcePath="{}/object/salesItemData/deferredRevenue" containerType="SINGLE" label="deferredRevenue" name="deferredRevenue" type="boolean"/>
+<Field __index="6" __sourcePath="{}/object/salesItemData/estimatedSellingPrice" containerType="SINGLE" label="estimatedSellingPrice" name="estimatedSellingPrice" type="decimal"/>
+<Field __index="7" __sourcePath="{}/object/salesItemData/inactive" containerType="SINGLE" label="inactive" name="inactive" type="boolean"/>
+<Field __index="8" __sourcePath="{}/object/salesItemData/itemDescription" containerType="SINGLE" label="itemDescription" name="itemDescription" type="string"/>
+<Field __index="9" __sourcePath="{}/object/salesItemData/itemIdentifier" containerType="SINGLE" label="itemIdentifier" name="itemIdentifier" type="string"/>
+<Field __index="10" __sourcePath="{}/object/salesItemData/itemName" containerType="SINGLE" label="itemName" name="itemName" type="string"/>
+<Field __index="11" __sourcePath="{}/object/salesItemData/itemUnitPrice" containerType="SINGLE" label="itemUnitPrice" name="itemUnitPrice" type="decimal"/>
+<Field __index="14" __sourcePath="{}/object/salesItemData/priceTypeReference/descriptor" containerType="SINGLE" label="descriptor" name="descriptor_1" type="string"/>
+<Field __index="17" __sourcePath="{}/object/salesItemData/projectTemplateReference/descriptor" containerType="SINGLE" label="descriptor" name="descriptor_2" type="string"/>
+<Field __index="23" __sourcePath="{}/object/salesItemData/revenueCategoryReference/descriptor" containerType="SINGLE" label="descriptor" name="descriptor_3" type="string"/>
+<Field __index="26" __sourcePath="{}/object/salesItemData/revenueRecognitionMethodReference/descriptor" containerType="SINGLE" label="descriptor" name="descriptor_4" type="string"/>
+<Field __index="30" __sourcePath="{}/object/salesItemData/salesItemID" containerType="SINGLE" label="salesItemID" name="salesItemID" type="string"/>
+<Field __index="33" __sourcePath="{}/object/salesItemData/taxApplicabilityReference/descriptor" containerType="SINGLE" label="descriptor" name="descriptor_5" type="string"/>
+<Field __index="34" __sourcePath="{}/object/salesItemData/thirdPartyEvidence" containerType="SINGLE" label="thirdPartyEvidence" name="thirdPartyEvidence" type="decimal"/>
+<Field __index="37" __sourcePath="{}/object/salesItemData/unitOfMeasure2Reference/descriptor" containerType="SINGLE" label="descriptor" name="descriptor_6" type="string"/>
+<Field __index="40" __sourcePath="{}/object/salesItemData/unitOfMeasureReference/descriptor" containerType="SINGLE" label="descriptor" name="descriptor_7" type="string"/>
+<Field __index="41" __sourcePath="{}/object/salesItemData/worktagOnly" containerType="SINGLE" label="worktagOnly" name="worktagOnly" type="boolean"/>
+<Field __index="44" __sourcePath="{}/object/salesItemReference/descriptor" containerType="SINGLE" label="descriptor" name="descriptor_8" type="string"/>
+<Field __index="45" __sourcePath="{}/object/version" containerType="SINGLE" label="version" name="version" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="18" __referenceCounter="0" __sourcePath="{}/object/salesItemData/relatedWorktagsReference" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="60e0dc64-5b88-4714-9855-01866fd664b7" _parent_id="__parent_id" _type="Output" id="6d98815c-bc1b-476f-b753-164993c143d4">
+<Record fieldDelimiter="," name="relatedWorktagsReference" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __artificialType="_parent_id" __systemManaged="true" name="__parent_id" type="string"/>
+<Field __index="20" __sourcePath="{}/object/salesItemData/relatedWorktagsReference/descriptor" containerType="SINGLE" label="descriptor" name="descriptor" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="27" __referenceCounter="0" __sourcePath="{}/object/salesItemData/salesItemGroupReference" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="60e0dc64-5b88-4714-9855-01866fd664b7" _parent_id="__parent_id" _type="Output" id="1cff53c3-5f78-486c-9db1-51cc485b1bbf">
+<Record fieldDelimiter="," name="salesItemGroupReference" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __artificialType="_parent_id" __systemManaged="true" name="__parent_id" type="string"/>
+<Field __index="29" __sourcePath="{}/object/salesItemData/salesItemGroupReference/descriptor" containerType="SINGLE" label="descriptor" name="descriptor" type="string"/>
+</Record>
+</Metadata>
+<Dictionary>
+<Entry id="DictionaryEntry0" input="true" name="inputPayload" output="false" type="object"/>
+<Entry id="DictionaryEntry1" input="false" name="outputPayload" output="true" type="object"/>
+</Dictionary>
+</Global>
+<Phase number="0">
+<Node enabled="enabled" fileURL="dict:inputPayload" guiName="Map&lt;k,v&gt; READER" guiX="20" guiY="20" id="BEAN_READER0" type="BEAN_READER">
+<attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Context outPort="0" sequenceField="__id" xpath=".">
+  <Mapping cloverField="field_0" trim="true" xpath="name"/>
+  <Mapping cloverField="field_1" trim="true" xpath="unitPrice"/>
+  <Mapping cloverField="description" trim="true" xpath="description"/>
+</Context>
+]]></attr>
+<attr name="_data_format"><![CDATA[MAP]]></attr>
+</Node>
+<Node cacheInMemory="true" enabled="enabled" fileURL="dict:outputPayload" guiName="Pojo WRITER" guiX="900" guiY="20" id="BEAN_WRITER0" type="BEAN_WRITER">
+<attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<object xmlns:clover="http://www.cloveretl.com/ns/xmlmapping" clover:inPort="0">
+  <addOnly>$0.addOnly</addOnly>
+  <salesItemData>
+    <VSOEPrice>$0.VSOEPrice</VSOEPrice>
+    <currencyReference>
+      <clover:collection clover:name="ID">
+        <item clover:inPort="2" clover:key="__parent_id" clover:parentKey="__id">
+          <type>$2.type</type>
+          <value>$2.value</value>
+        </item>
+      </clover:collection>
+      <descriptor>$0.descriptor</descriptor>
+    </currencyReference>
+    <deferredRevenue>$0.deferredRevenue</deferredRevenue>
+    <estimatedSellingPrice>$0.estimatedSellingPrice</estimatedSellingPrice>
+    <inactive>$0.inactive</inactive>
+    <itemDescription>$0.itemDescription</itemDescription>
+    <itemIdentifier>$0.itemIdentifier</itemIdentifier>
+    <itemName>$0.itemName</itemName>
+    <itemUnitPrice>$0.itemUnitPrice</itemUnitPrice>
+    <priceTypeReference>
+      <descriptor>$0.descriptor_1</descriptor>
+    </priceTypeReference>
+    <projectTemplateReference>
+      <descriptor>$0.descriptor_2</descriptor>
+    </projectTemplateReference>
+    <revenueCategoryReference>
+      <clover:collection clover:name="ID">
+        <item clover:inPort="1" clover:key="__parent_id" clover:parentKey="__id">
+          <type>$1.type</type>
+          <value>$1.value</value>
+        </item>
+      </clover:collection>
+      <descriptor>$0.descriptor_3</descriptor>
+    </revenueCategoryReference>
+    <revenueRecognitionMethodReference>
+      <descriptor>$0.descriptor_4</descriptor>
+    </revenueRecognitionMethodReference>
+    <salesItemID>$0.salesItemID</salesItemID>
+    <taxApplicabilityReference>
+      <descriptor>$0.descriptor_5</descriptor>
+    </taxApplicabilityReference>
+    <thirdPartyEvidence>$0.thirdPartyEvidence</thirdPartyEvidence>
+    <unitOfMeasure2Reference>
+      <descriptor>$0.descriptor_6</descriptor>
+    </unitOfMeasure2Reference>
+    <unitOfMeasureReference>
+      <descriptor>$0.descriptor_7</descriptor>
+    </unitOfMeasureReference>
+    <worktagOnly>$0.worktagOnly</worktagOnly>
+  </salesItemData>
+  <salesItemReference>
+    <descriptor>$0.descriptor_8</descriptor>
+  </salesItemReference>
+  <version>$0.version</version>
+</object>]]></attr>
+<attr name="_data_format"><![CDATA[JAVA]]></attr>
+<attr name="schema"><![CDATA[<?xml version="1.0" encoding="UTF-8"?><schema-object>
+  <typed-object-ref type-ref="com.workday.revenue.PutSalesItemRequestType"/>
+  <typed-object type="com.workday.revenue.SalesItemGroupObjectIDType">
+    <typed-object-ref name="type" type-ref="java.lang.String"/>
+    <typed-object-ref name="value" type-ref="java.lang.String"/>
+  </typed-object>
+  <typed-object type="com.workday.revenue.UnitOfMeasureObjectIDType">
+    <typed-object-ref name="type" type-ref="java.lang.String"/>
+    <typed-object-ref name="value" type-ref="java.lang.String"/>
+  </typed-object>
+  <typed-object type="java.math.BigDecimal"/>
+  <typed-object type="com.workday.revenue.ContractLineTypeObjectIDType">
+    <typed-object-ref name="type" type-ref="java.lang.String"/>
+    <typed-object-ref name="value" type-ref="java.lang.String"/>
+  </typed-object>
+  <typed-object type="com.workday.revenue.AccountingWorktagObjectType">
+    <schema-collection name="ID" type="java.util.List">
+      <typed-object-ref type-ref="com.workday.revenue.AccountingWorktagObjectIDType"/>
+    </schema-collection>
+    <typed-object-ref name="descriptor" type-ref="java.lang.String"/>
+  </typed-object>
+  <typed-object type="java.lang.Boolean"/>
+  <typed-object type="com.workday.revenue.SalesItemObjectType">
+    <schema-collection name="ID" type="java.util.List">
+      <typed-object-ref type-ref="com.workday.revenue.SalesItemObjectIDType"/>
+    </schema-collection>
+    <typed-object-ref name="descriptor" type-ref="java.lang.String"/>
+  </typed-object>
+  <typed-object type="java.lang.String"/>
+  <typed-object type="com.workday.revenue.ProjectTemplateObjectType">
+    <schema-collection name="ID" type="java.util.List">
+      <typed-object-ref type-ref="com.workday.revenue.ProjectTemplateObjectIDType"/>
+    </schema-collection>
+    <typed-object-ref name="descriptor" type-ref="java.lang.String"/>
+  </typed-object>
+  <typed-object type="com.workday.revenue.CurrencyObjectType">
+    <schema-collection name="ID" type="java.util.List">
+      <typed-object-ref type-ref="com.workday.revenue.CurrencyObjectIDType"/>
+    </schema-collection>
+    <typed-object-ref name="descriptor" type-ref="java.lang.String"/>
+  </typed-object>
+  <typed-object type="com.workday.revenue.RevenueCategoryObjectType">
+    <schema-collection name="ID" type="java.util.List">
+      <typed-object-ref type-ref="com.workday.revenue.RevenueCategoryObjectIDType"/>
+    </schema-collection>
+    <typed-object-ref name="descriptor" type-ref="java.lang.String"/>
+  </typed-object>
+  <typed-object type="com.workday.revenue.UnitOfMeasureObjectType">
+    <schema-collection name="ID" type="java.util.List">
+      <typed-object-ref type-ref="com.workday.revenue.UnitOfMeasureObjectIDType"/>
+    </schema-collection>
+    <typed-object-ref name="descriptor" type-ref="java.lang.String"/>
+  </typed-object>
+  <typed-object type="com.workday.revenue.AccountingWorktagObjectIDType">
+    <typed-object-ref name="type" type-ref="java.lang.String"/>
+    <typed-object-ref name="value" type-ref="java.lang.String"/>
+  </typed-object>
+  <typed-object type="com.workday.revenue.SalesItemDataType">
+    <typed-object-ref name="VSOEPrice" type-ref="java.math.BigDecimal"/>
+    <typed-object-ref name="currencyReference" type-ref="com.workday.revenue.CurrencyObjectType"/>
+    <typed-object-ref name="deferredRevenue" type-ref="java.lang.Boolean"/>
+    <typed-object-ref name="estimatedSellingPrice" type-ref="java.math.BigDecimal"/>
+    <typed-object-ref name="inactive" type-ref="java.lang.Boolean"/>
+    <typed-object-ref name="itemDescription" type-ref="java.lang.String"/>
+    <typed-object-ref name="itemIdentifier" type-ref="java.lang.String"/>
+    <typed-object-ref name="itemName" type-ref="java.lang.String"/>
+    <typed-object-ref name="itemUnitPrice" type-ref="java.math.BigDecimal"/>
+    <typed-object-ref name="priceTypeReference" type-ref="com.workday.revenue.ContractLineTypeObjectType"/>
+    <typed-object-ref name="projectTemplateReference" type-ref="com.workday.revenue.ProjectTemplateObjectType"/>
+    <schema-collection name="relatedWorktagsReference" type="java.util.List">
+      <typed-object-ref type-ref="com.workday.revenue.AccountingWorktagObjectType"/>
+    </schema-collection>
+    <typed-object-ref name="revenueCategoryReference" type-ref="com.workday.revenue.RevenueCategoryObjectType"/>
+    <typed-object-ref name="revenueRecognitionMethodReference" type-ref="com.workday.revenue.ScheduleDistributionMethodObjectType"/>
+    <schema-collection name="salesItemGroupReference" type="java.util.List">
+      <typed-object-ref type-ref="com.workday.revenue.SalesItemGroupObjectType"/>
+    </schema-collection>
+    <typed-object-ref name="salesItemID" type-ref="java.lang.String"/>
+    <typed-object-ref name="taxApplicabilityReference" type-ref="com.workday.revenue.TaxApplicabilityObjectType"/>
+    <typed-object-ref name="thirdPartyEvidence" type-ref="java.math.BigDecimal"/>
+    <typed-object-ref name="unitOfMeasure2Reference" type-ref="com.workday.revenue.UnitOfMeasureObjectType"/>
+    <typed-object-ref name="unitOfMeasureReference" type-ref="com.workday.revenue.UnitOfMeasureObjectType"/>
+    <typed-object-ref name="worktagOnly" type-ref="java.lang.Boolean"/>
+  </typed-object>
+  <typed-object type="com.workday.revenue.SalesItemObjectIDType">
+    <typed-object-ref name="type" type-ref="java.lang.String"/>
+    <typed-object-ref name="value" type-ref="java.lang.String"/>
+  </typed-object>
+  <typed-object type="com.workday.revenue.CurrencyObjectIDType">
+    <typed-object-ref name="type" type-ref="java.lang.String"/>
+    <typed-object-ref name="value" type-ref="java.lang.String"/>
+  </typed-object>
+  <typed-object type="com.workday.revenue.ScheduleDistributionMethodObjectType">
+    <schema-collection name="ID" type="java.util.List">
+      <typed-object-ref type-ref="com.workday.revenue.ScheduleDistributionMethodObjectIDType"/>
+    </schema-collection>
+    <typed-object-ref name="descriptor" type-ref="java.lang.String"/>
+  </typed-object>
+  <typed-object type="com.workday.revenue.RevenueCategoryObjectIDType">
+    <typed-object-ref name="type" type-ref="java.lang.String"/>
+    <typed-object-ref name="value" type-ref="java.lang.String"/>
+  </typed-object>
+  <typed-object type="com.workday.revenue.PutSalesItemRequestType">
+    <typed-object-ref name="addOnly" type-ref="java.lang.Boolean"/>
+    <typed-object-ref name="salesItemData" type-ref="com.workday.revenue.SalesItemDataType"/>
+    <typed-object-ref name="salesItemReference" type-ref="com.workday.revenue.SalesItemObjectType"/>
+    <typed-object-ref name="version" type-ref="java.lang.String"/>
+  </typed-object>
+  <typed-object type="com.workday.revenue.SalesItemGroupObjectType">
+    <schema-collection name="ID" type="java.util.List">
+      <typed-object-ref type-ref="com.workday.revenue.SalesItemGroupObjectIDType"/>
+    </schema-collection>
+    <typed-object-ref name="descriptor" type-ref="java.lang.String"/>
+  </typed-object>
+  <typed-object type="com.workday.revenue.ProjectTemplateObjectIDType">
+    <typed-object-ref name="type" type-ref="java.lang.String"/>
+    <typed-object-ref name="value" type-ref="java.lang.String"/>
+  </typed-object>
+  <typed-object type="com.workday.revenue.ScheduleDistributionMethodObjectIDType">
+    <typed-object-ref name="type" type-ref="java.lang.String"/>
+    <typed-object-ref name="value" type-ref="java.lang.String"/>
+  </typed-object>
+  <typed-object type="com.workday.revenue.TaxApplicabilityObjectType">
+    <schema-collection name="ID" type="java.util.List">
+      <typed-object-ref type-ref="com.workday.revenue.TaxApplicabilityObjectIDType"/>
+    </schema-collection>
+    <typed-object-ref name="descriptor" type-ref="java.lang.String"/>
+  </typed-object>
+  <typed-object type="com.workday.revenue.ContractLineTypeObjectType">
+    <schema-collection name="ID" type="java.util.List">
+      <typed-object-ref type-ref="com.workday.revenue.ContractLineTypeObjectIDType"/>
+    </schema-collection>
+    <typed-object-ref name="descriptor" type-ref="java.lang.String"/>
+  </typed-object>
+  <typed-object type="com.workday.revenue.TaxApplicabilityObjectIDType">
+    <typed-object-ref name="type" type-ref="java.lang.String"/>
+    <typed-object-ref name="value" type-ref="java.lang.String"/>
+  </typed-object>
+</schema-object>
+]]></attr>
+<attr name="__metadata"><![CDATA[true]]></attr>
+</Node>
+<Node enabled="enabled" guiName="Foreach 'data' -&gt; 'ID'" guiX="460" guiY="120" id="FOREACH_DATA_ID" transformClass="com.mulesoft.datamapper.transform.MelRecordTransform" type="REFORMAT">
+<attr name="melScript"><![CDATA[//MEL
+//START -> DO NOT REMOVE
+output.__id = input.__id;
+output.__parent_id = input.__id;
+//END -> DO NOT REMOVE
+output.type = output.type = "Revenue_Category_ID";
+output.value = output.value = "REVENUE_CATEGORY-4";;]]></attr>
+</Node>
+<Node enabled="enabled" guiName="Foreach 'data' -&gt; 'ID'" guiX="460" guiY="220" id="FOREACH_DATA_ID1" transformClass="com.mulesoft.datamapper.transform.MelRecordTransform" type="REFORMAT">
+<attr name="melScript"><![CDATA[//MEL
+//START -> DO NOT REMOVE
+output.__id = input.__id;
+output.__parent_id = input.__id;
+//END -> DO NOT REMOVE
+output.type = output.type = "Currency_Numeric_Code";
+output.value = output.value = "978";]]></attr>
+</Node>
+<Node enabled="enabled" guiName="Foreach 'data' -&gt; 'object'" guiX="460" guiY="20" id="FOREACH_DATA_OBJECT" transformClass="com.mulesoft.datamapper.transform.MelRecordTransform" type="REFORMAT">
+<attr name="melScript"><![CDATA[//MEL
+//START -> DO NOT REMOVE
+output.__id = input.__id;
+//END -> DO NOT REMOVE
+output.itemName = input.field_0;
+output.itemDescription = input.description;
+output.itemUnitPrice = input.field_1;]]></attr>
+</Node>
+<Node enabled="enabled" guiName="Duplicate data" guiX="240" guiY="20" id="SIMPLE_COPY0" type="SIMPLE_COPY"/>
+<Edge debugMode="true" fromNode="BEAN_READER0:0" guiBendpoints="" id="Edge2" inPort="Port 0 (in)" metadata="243254a7-bd28-410a-8c01-30495be7449e" outPort="Port 0 (out)" toNode="SIMPLE_COPY0:0"/>
+<Edge debugMode="true" fromNode="FOREACH_DATA_ID:0" guiBendpoints="" id="Edge4" inPort="Port 1 (in)" metadata="8f803485-d33c-449e-a405-70292b09fe74" outPort="Port 0 (out)" toNode="BEAN_WRITER0:1"/>
+<Edge debugMode="true" fromNode="FOREACH_DATA_ID1:0" guiBendpoints="" id="Edge6" inPort="Port 2 (in)" metadata="51d8bbd2-c61b-47b9-83e9-92d6bdef34fe" outPort="Port 0 (out)" toNode="BEAN_WRITER0:2"/>
+<Edge debugMode="true" fromNode="FOREACH_DATA_OBJECT:0" guiBendpoints="" id="Edge1" inPort="Port 0 (in)" metadata="60e0dc64-5b88-4714-9855-01866fd664b7" outPort="Port 0 (out)" toNode="BEAN_WRITER0:0"/>
+<Edge debugMode="true" fromNode="SIMPLE_COPY0:0" guiBendpoints="" id="Edge0" inPort="Port 0 (in)" metadata="243254a7-bd28-410a-8c01-30495be7449e" outPort="Port 0 (out)" toNode="FOREACH_DATA_OBJECT:0"/>
+<Edge debugMode="true" fromNode="SIMPLE_COPY0:1" guiBendpoints="" id="Edge3" inPort="Port 0 (in)" metadata="243254a7-bd28-410a-8c01-30495be7449e" outPort="Port 1 (out)" toNode="FOREACH_DATA_ID:0"/>
+<Edge debugMode="true" fromNode="SIMPLE_COPY0:2" guiBendpoints="" id="Edge5" inPort="Port 0 (in)" metadata="243254a7-bd28-410a-8c01-30495be7449e" outPort="Port 2 (out)" toNode="FOREACH_DATA_ID1:0"/>
+</Phase>
+</Graph>

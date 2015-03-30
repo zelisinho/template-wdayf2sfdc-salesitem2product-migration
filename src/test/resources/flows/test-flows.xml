@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:wd-revenue="http://www.mulesoft.org/schema/mule/wd-revenue"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:data-mapper="http://www.mulesoft.org/schema/mule/ee/data-mapper" 
+	xmlns:sfdc="http://www.mulesoft.org/schema/mule/sfdc" 
+	xmlns="http://www.mulesoft.org/schema/mule/core" 
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	version="EE-3.6.1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/sfdc http://www.mulesoft.org/schema/mule/sfdc/current/mule-sfdc.xsd
+http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schema/mule/ee/data-mapper/current/mule-data-mapper.xsd
+http://www.mulesoft.org/schema/mule/wd-hr http://www.mulesoft.org/schema/mule/wd-hr/current/mule-wd-hr.xsd
+http://www.mulesoft.org/schema/mule/wd-revenue http://www.mulesoft.org/schema/mule/wd-revenue/current/mule-wd-revenue.xsd">
+   <data-mapper:config name="Pojo_To_ChangeLegalNameRequestType" transformationGraphPath="pojo_to_changelegalnamerequesttype.grf" doc:name="Pojo_To_ChangeLegalNameRequestType"/>
+    
+    <sub-flow name="retrieveProductSFDC" >
+        <sfdc:query-single config-ref="Salesforce" query="SELECT Id, Name, Description FROM Product2 WHERE Name = '#[payload['Name']]'" doc:name="Salesforce"/>
+
+    </sub-flow>
+    <sub-flow name="retievePricebookEntrySFDC">
+        <sfdc:query-single config-ref="Salesforce" query="SELECT Id, UnitPrice FROM PriceBookEntry WHERE Product2Id = '#[payload['Id']]'" doc:name="Salesforce"/>
+    </sub-flow>
+    <sub-flow name="deleteSFDC">
+        <sfdc:delete config-ref="Salesforce" doc:name="Salesforce">
+            <sfdc:ids ref="#[payload]"/>
+        </sfdc:delete>
+    </sub-flow>
+    
+    
+    <sub-flow name="createNewSalesItemWDAYF">
+
+        <data-mapper:transform config-ref="Map_To_PutSalesItemRequestType" doc:name="Map To PutSalesItemRequestType"/>
+        <wd-revenue:put-sales-item config-ref="Workday_Revenue_Management" doc:name="Workday Revenue Management"/>
+        <logger level="INFO" doc:name="Logger"/>
+    </sub-flow>
+    
+</mule>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><Graph __version="3.5.0" author="Admin" created="Wed Mar 25 07:39:44 CET 2015" description="List&lt;UpsertResult&gt; To List&lt;PricebookEntry&gt;" guiVersion="3.4.4.P" id="1427270285129" licenseCode="Unlicensed" licenseType="Unknown" modified="Wed Mar 25 07:39:44 CET 2015" modifiedBy="Admin" name="List_UpsertResult__To_List_PricebookEntry__1" revision="1.0" showComponentDetails="false">
+<Global>
+<Metadata __index="1" __referenceCounter="0" __sourcePath="{}/list/errors" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="c1a15f99-020a-4b1a-8a3f-6144009bc17e" _parent_id="__parent_id" _type="Input" id="d4c76eee-41d5-497c-bc24-ec234ecdf2f4">
+<Record fieldDelimiter="," name="errors" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __artificialType="_parent_id" __systemManaged="true" name="__parent_id" type="string"/>
+<Field __index="1" __sourcePath="{}/list/errors/fields" containerType="list" label="fields" name="fields" type="string"/>
+<Field __index="2" __sourcePath="{}/list/errors/message" containerType="SINGLE" label="message" name="message" type="string"/>
+<Field __index="3" __sourcePath="{}/list/errors/statusCode" containerType="SINGLE" label="statusCode" name="statusCode" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="0" __referenceCounter="1" __sourcePath="{}/list" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _type="Input" id="c1a15f99-020a-4b1a-8a3f-6144009bc17e">
+<Record fieldDelimiter="," name="list" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __index="0" __sourcePath="{}/list/created" containerType="SINGLE" label="created" name="created" type="boolean"/>
+<Field __index="4" __sourcePath="{}/list/id" containerType="SINGLE" label="id" name="id" type="string"/>
+<Field __index="5" __sourcePath="{}/list/success" containerType="SINGLE" label="success" name="success" type="boolean"/>
+</Record>
+</Metadata>
+<Metadata __index="0" __referenceCounter="1" __sourcePath="{}/PricebookEntry" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _type="Output" id="956e93d3-ed7c-40fd-9ef7-b73e15fda71f">
+<Record fieldDelimiter="," name="PricebookEntry" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __implementationClass="java.lang.String" __index="0" __sourcePath="{}/PricebookEntry/Id" containerType="SINGLE" label="Id" name="Id" type="string"/>
+<Field __implementationClass="java.lang.String" __index="1" __sourcePath="{}/PricebookEntry/Name" containerType="SINGLE" label="Name" name="Name" type="string"/>
+<Field __implementationClass="java.lang.String" __index="2" __sourcePath="{}/PricebookEntry/Pricebook2Id" containerType="SINGLE" label="Pricebook2Id" name="Pricebook2Id" type="string"/>
+<Field __implementationClass="java.lang.String" __index="3" __sourcePath="{}/PricebookEntry/Product2Id" containerType="SINGLE" label="Product2Id" name="Product2Id" type="string"/>
+<Field __implementationClass="java.lang.String" __index="4" __sourcePath="{}/PricebookEntry/UnitPrice" containerType="SINGLE" label="UnitPrice" name="UnitPrice" type="string"/>
+<Field __implementationClass="java.lang.Boolean" __index="5" __sourcePath="{}/PricebookEntry/IsActive" containerType="SINGLE" label="IsActive" name="IsActive" type="boolean"/>
+<Field __implementationClass="java.lang.Boolean" __index="6" __sourcePath="{}/PricebookEntry/UseStandardPrice" containerType="SINGLE" label="UseStandardPrice" name="UseStandardPrice" type="boolean"/>
+<Field __dmType="Calendar" __implementationClass="java.util.Calendar" __index="7" __sourcePath="{}/PricebookEntry/CreatedDate" containerType="SINGLE" label="CreatedDate" name="CreatedDate" type="string"/>
+<Field __implementationClass="java.lang.String" __index="8" __sourcePath="{}/PricebookEntry/CreatedById" containerType="SINGLE" label="CreatedById" name="CreatedById" type="string"/>
+<Field __dmType="Calendar" __implementationClass="java.util.Calendar" __index="9" __sourcePath="{}/PricebookEntry/LastModifiedDate" containerType="SINGLE" label="LastModifiedDate" name="LastModifiedDate" type="string"/>
+<Field __implementationClass="java.lang.String" __index="10" __sourcePath="{}/PricebookEntry/LastModifiedById" containerType="SINGLE" label="LastModifiedById" name="LastModifiedById" type="string"/>
+<Field __dmType="Calendar" __implementationClass="java.util.Calendar" __index="11" __sourcePath="{}/PricebookEntry/SystemModstamp" containerType="SINGLE" label="SystemModstamp" name="SystemModstamp" type="string"/>
+<Field __implementationClass="java.lang.String" __index="12" __sourcePath="{}/PricebookEntry/ProductCode" containerType="SINGLE" label="ProductCode" name="ProductCode" type="string"/>
+<Field __implementationClass="java.lang.Boolean" __index="13" __sourcePath="{}/PricebookEntry/IsDeleted" containerType="SINGLE" label="IsDeleted" name="IsDeleted" type="boolean"/>
+</Record>
+</Metadata>
+<Dictionary>
+<Entry id="DictionaryEntry0" input="true" name="inputPayload" output="false" type="object"/>
+<Entry id="DictionaryEntry1" input="false" name="outputPayload" output="true" type="object"/>
+</Dictionary>
+</Global>
+<Phase number="0">
+<Node enabled="enabled" fileURL="dict:inputPayload" guiName="Pojo READER" guiX="20" guiY="20" id="BEAN_READER0" type="BEAN_READER">
+<attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Context outPort="0" sequenceField="__id" xpath=".">
+  <Mapping cloverField="created" trim="true" xpath="created"/>
+  <Mapping cloverField="id" trim="true" xpath="id"/>
+  <Mapping cloverField="success" trim="true" xpath="success"/>
+</Context>
+]]></attr>
+<attr name="_data_format"><![CDATA[JAVA]]></attr>
+<attr name="schema"><![CDATA[<?xml version="1.0" encoding="UTF-8"?><schema-object>
+  <schema-collection>
+    <typed-object-ref type-ref="com.sforce.soap.partner.UpsertResult"/>
+  </schema-collection>
+  <typed-object type="com.sforce.soap.partner.StatusCode"/>
+  <typed-object type="boolean"/>
+  <typed-object type="com.sforce.soap.partner.Error">
+    <schema-collection array="true" name="fields">
+      <typed-object-ref type-ref="java.lang.String"/>
+    </schema-collection>
+    <typed-object-ref name="message" type-ref="java.lang.String"/>
+    <typed-object-ref name="statusCode" type-ref="com.sforce.soap.partner.StatusCode"/>
+  </typed-object>
+  <typed-object type="com.sforce.soap.partner.UpsertResult">
+    <typed-object-ref name="created" type-ref="boolean"/>
+    <schema-collection array="true" name="errors">
+      <typed-object-ref type-ref="com.sforce.soap.partner.Error"/>
+    </schema-collection>
+    <typed-object-ref name="id" type-ref="java.lang.String"/>
+    <typed-object-ref name="success" type-ref="boolean"/>
+  </typed-object>
+  <typed-object type="java.lang.String"/>
+</schema-object>
+]]></attr>
+<attr name="__metadata"><![CDATA[true]]></attr>
+</Node>
+<Node enabled="enabled" guiName="Foreach 'list' -&gt; 'PricebookEntry'" guiX="460" guiY="20" id="FOREACH_LIST_PRICEBOOK_ENTRY" transformClass="com.mulesoft.datamapper.transform.MelRecordTransform" type="REFORMAT">
+<attr name="melScript"><![CDATA[//MEL
+//START -> DO NOT REMOVE
+output.__id = input.__id;
+//END -> DO NOT REMOVE
+output.Product2Id = input.id;
+]]></attr>
+</Node>
+<Node enabled="enabled" fileURL="dict:outputPayload" guiName="Map&lt;k,v&gt; WRITER" guiX="900" guiY="20" id="MAP_WRITER0" type="MAP_WRITER">
+<attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<clover:collection clover:name="PricebookEntry" xmlns:clover="http://www.cloveretl.com/ns/xmlmapping">
+  <item clover:inPort="0">
+    <Id clover:dataType="java.lang.String">$0.Id</Id>
+    <Name clover:dataType="java.lang.String">$0.Name</Name>
+    <Pricebook2Id clover:dataType="java.lang.String">$0.Pricebook2Id</Pricebook2Id>
+    <Product2Id clover:dataType="java.lang.String">$0.Product2Id</Product2Id>
+    <UnitPrice clover:dataType="java.lang.String">$0.UnitPrice</UnitPrice>
+    <IsActive clover:dataType="java.lang.Boolean">$0.IsActive</IsActive>
+    <UseStandardPrice clover:dataType="java.lang.Boolean">$0.UseStandardPrice</UseStandardPrice>
+    <CreatedDate clover:dataType="java.util.Calendar">$0.CreatedDate</CreatedDate>
+    <CreatedById clover:dataType="java.lang.String">$0.CreatedById</CreatedById>
+    <LastModifiedDate clover:dataType="java.util.Calendar">$0.LastModifiedDate</LastModifiedDate>
+    <LastModifiedById clover:dataType="java.lang.String">$0.LastModifiedById</LastModifiedById>
+    <SystemModstamp clover:dataType="java.util.Calendar">$0.SystemModstamp</SystemModstamp>
+    <ProductCode clover:dataType="java.lang.String">$0.ProductCode</ProductCode>
+    <IsDeleted clover:dataType="java.lang.Boolean">$0.IsDeleted</IsDeleted>
+  </item>
+</clover:collection>]]></attr>
+<attr name="_data_format"><![CDATA[MAP]]></attr>
+<attr name="__metadata"><![CDATA[true]]></attr>
+</Node>
+<Edge debugMode="true" fromNode="BEAN_READER0:0" guiBendpoints="" id="Edge0" inPort="Port 0 (in)" metadata="c1a15f99-020a-4b1a-8a3f-6144009bc17e" outPort="Port 0 (out)" toNode="FOREACH_LIST_PRICEBOOK_ENTRY:0"/>
+<Edge debugMode="true" fromNode="FOREACH_LIST_PRICEBOOK_ENTRY:0" guiBendpoints="" id="Edge1" inPort="Port 0 (in)" metadata="956e93d3-ed7c-40fd-9ef7-b73e15fda71f" outPort="Port 0 (out)" toNode="MAP_WRITER0:0"/>
+</Phase>
+</Graph>
