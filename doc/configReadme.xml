@@ -54,7 +54,7 @@ Once your app is all set and started, supposing you choose as domain name `sfdca
 + sfdc.password `DylanPassword123`
 + sfdc.securityToken `avsfwCUl7apQs56Xq2AKi3X`
 + sfdc.url `https://login.salesforce.com/services/Soap/u/32.0`
-+ sfdc.integration.pricebook2Id `standard_pricebook_id`
++ sfdc.integration.pricebook2Id `standard_pricebook2_id`
 
 **Workday Connector configuration**
 
@@ -64,10 +64,10 @@ Once your app is all set and started, supposing you choose as domain name `sfdca
 
 **SMTP Services configuration**
 
-smtp.host `smtp.gmail.com`
-smtp.port `587`
-smtp.user `gmail_user`
-smtp.password `gmail_password`
++ smtp.host `smtp.gmail.com`
++ smtp.port `587`
++ smtp.user `gmail_user`
++ smtp.password `gmail_password`
 
 **EMail Details**
 
@@ -90,7 +90,7 @@ This template has only a [HTTP Connector](http://www.mulesoft.org/documentation/
 **HTTP Connector** - Start Report Generation
 
 + `${http.port}` is set as a property to be defined either on a property file or in CloudHub environment variables.
-+ The path configured by default is `migrateAccounts` and you are free to change it for the one that you prefer.
++ The path configured by default is `migrateSalesareas` and you are free to change it for the one that you prefer.
 + The host name for all endpoints in your CloudHub configuration should be defined as `0.0.0.0`. CloudHub will then route requests from your application domain URL to the endpoint.
 + The endpoint is configured as a *request-response* by placing it in the source section of the flow. The response will be the summary of Batch Input stage - number of Accounts loaded by the criteria specified.
 ]]>
@@ -98,8 +98,9 @@ This template has only a [HTTP Connector](http://www.mulesoft.org/documentation/
 		<section id="default_business_logic_xml">
 		<![CDATA[
 Functional aspect of the Template is implemented on this XML, directed by one flow responsible of excecuting the logic.
-For the pourpose of this particular Template the *mainFlow* just excecutes a [Batch Job](http://www.mulesoft.org/documentation/display/current/Batch+Processing) which handles all the migration logic.
+For the purpose of this particular Template the *mainFlow* just excecutes a [Batch Job](http://www.mulesoft.org/documentation/display/current/Batch+Processing) which handles all the migration logic.
 This flow has Exception Strategy that basically consists of invoking the *defaultChoiceExceptionStrategy* defined in *errorHandling.xml* file.
+The details of batch job functionality is described in the **Use Case** section.
 ]]>
 		</section>
 	</sections>

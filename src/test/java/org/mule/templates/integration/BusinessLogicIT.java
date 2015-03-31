@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.jetel.data.primitive.Decimal;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -25,13 +24,12 @@ import org.junit.Test;
 import org.mule.MessageExchangePattern;
 import org.mule.api.MuleException;
 import org.mule.processor.chain.SubflowInterceptingChainLifecycleWrapper;
-import org.python.icu.text.ArabicShaping;
 
 import com.mulesoft.module.batch.BatchTestHelper;
 
 /**
  * The objective of this class is to validate the correct behavior of the flows
- * for this Anypoint Tempalte that make calls to external systems.
+ * for this Anypoint Template that make calls to external systems.
  * 
  */
 public class BusinessLogicIT extends AbstractTemplateTestCase {
@@ -47,14 +45,7 @@ public class BusinessLogicIT extends AbstractTemplateTestCase {
 	private BatchTestHelper helper;
 	private Map<String,Object> salesItemMap;
 	private final List<String> idsToDeleteSFDC = new ArrayList<String>();
-	private final String SALES_ITEM_NAME = "wdayf2sfdc-product-migration1427698038238";//TEMPLATE_PREFFIX + System.currentTimeMillis();;
-
-	@BeforeClass
-	public static void init(){
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-		Calendar cal = Calendar.getInstance();
-		System.setProperty("migration.startDate", "\"" + sdf.format(cal.getTime()) + "\"");	
-	}
+	private static final String SALES_ITEM_NAME = "wdayf2sfdc-product-migration1427698038238";//TEMPLATE_PREFFIX + System.currentTimeMillis();;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -84,11 +75,7 @@ public class BusinessLogicIT extends AbstractTemplateTestCase {
 		cleanUpSandboxData();
 	}
 	
-	private void cleanUpSandboxData() throws MuleException, Exception {
-		deleteSFDC.process(getTestEvent(idsToDeleteSFDC, MessageExchangePattern.REQUEST_RESPONSE));
-		idsToDeleteSFDC.clear();		
-	}
-
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testMainFlow() throws Exception {
 		//Thread.sleep(10000);
@@ -114,6 +101,11 @@ public class BusinessLogicIT extends AbstractTemplateTestCase {
 		
 	}
 
+	private void cleanUpSandboxData() throws MuleException, Exception {
+		deleteSFDC.process(getTestEvent(idsToDeleteSFDC, MessageExchangePattern.REQUEST_RESPONSE));
+		idsToDeleteSFDC.clear();		
+	}
+	
 	private void createTestDataInSandBox() throws MuleException, Exception {
 		SubflowInterceptingChainLifecycleWrapper flow = getSubFlow("createNewSalesItemWDAYF");
 		flow.initialise();
