@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:wd-revenue="http://www.mulesoft.org/schema/mule/wd-revenue"
+<mule xmlns:spring="http://www.springframework.org/schema/beans" xmlns:wd-revenue="http://www.mulesoft.org/schema/mule/wd-revenue"
 	xmlns:data-mapper="http://www.mulesoft.org/schema/mule/ee/data-mapper" 
 	xmlns:sfdc="http://www.mulesoft.org/schema/mule/sfdc" 
 	xmlns="http://www.mulesoft.org/schema/mule/core" 
@@ -11,7 +11,8 @@
 http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/sfdc http://www.mulesoft.org/schema/mule/sfdc/current/mule-sfdc.xsd
 http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schema/mule/ee/data-mapper/current/mule-data-mapper.xsd
-http://www.mulesoft.org/schema/mule/wd-revenue http://www.mulesoft.org/schema/mule/wd-revenue/current/mule-wd-revenue.xsd">
+http://www.mulesoft.org/schema/mule/wd-revenue http://www.mulesoft.org/schema/mule/wd-revenue/current/mule-wd-revenue.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd">
     <data-mapper:config name="Map_To_PutSalesItemRequestType" transformationGraphPath="map_to_putsalesitemrequesttype.grf" doc:name="Map_To_PutSalesItemRequestType"/>
     
     <sub-flow name="retrieveProductSFDC" >
