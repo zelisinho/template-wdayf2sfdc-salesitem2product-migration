@@ -9,9 +9,7 @@ package org.mule.templates.integration;
 import static junit.framework.Assert.assertEquals;
 
 import java.io.FileInputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +17,6 @@ import java.util.Properties;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mule.MessageExchangePattern;
 import org.mule.api.MuleException;
@@ -42,10 +39,10 @@ public class BusinessLogicIT extends AbstractTemplateTestCase {
 	private static final String PATH_TO_TEST_PROPERTIES = "./src/test/resources/mule.test.properties";
 	private static final String DESCRIPTION = "Test description.";
 	private static final Integer UNIT_PRICE = 100;
+	private static final String SALES_ITEM_NAME = TEMPLATE_PREFFIX + System.currentTimeMillis();
+	private final List<String> idsToDeleteSFDC = new ArrayList<String>();
 	private BatchTestHelper helper;
 	private Map<String,Object> salesItemMap;
-	private final List<String> idsToDeleteSFDC = new ArrayList<String>();
-	private static final String SALES_ITEM_NAME = "wdayf2sfdc-product-migration1427698038238";//TEMPLATE_PREFFIX + System.currentTimeMillis();;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -67,7 +64,7 @@ public class BusinessLogicIT extends AbstractTemplateTestCase {
     	   logger.error("Error occured while reading mule.test.properties", e);
     	}
     	
-    	//createTestDataInSandBox();
+    	createTestDataInSandBox();
 	}
 	
 	@After
@@ -78,7 +75,6 @@ public class BusinessLogicIT extends AbstractTemplateTestCase {
 	@SuppressWarnings("deprecation")
 	@Test
 	public void testMainFlow() throws Exception {
-		//Thread.sleep(10000);
 		runFlow("mainFlow");
 
 		// Wait for the batch job executed by the poll flow to finish

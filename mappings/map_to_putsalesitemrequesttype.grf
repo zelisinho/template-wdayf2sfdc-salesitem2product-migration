@@ -379,7 +379,8 @@ output.__id = input.__id;
 //END -> DO NOT REMOVE
 output.itemName = input.field_0;
 output.itemDescription = input.description;
-output.itemUnitPrice = input.field_1;]]></attr>
+output.itemUnitPrice = input.field_1;
+output.salesItemID = "SALES_ITEM-6-31";]]></attr>
 </Node>
 <Node enabled="enabled" guiName="Duplicate data" guiX="240" guiY="20" id="SIMPLE_COPY0" type="SIMPLE_COPY"/>
 <Edge debugMode="true" fromNode="BEAN_READER0:0" guiBendpoints="" id="Edge2" inPort="Port 0 (in)" metadata="243254a7-bd28-410a-8c01-30495be7449e" outPort="Port 0 (out)" toNode="SIMPLE_COPY0:0"/>
