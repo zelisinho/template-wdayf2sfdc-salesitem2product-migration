@@ -41,6 +41,7 @@
 <Entry id="DictionaryEntry1" input="false" name="outputPayload" output="true" type="object"/>
 <Entry dictval.__javaType="java.lang.String" id="DictionaryEntry2" input="true" name="Product2Id" output="false" type="string"/>
 <Entry dictval.__javaType="java.lang.String" id="DictionaryEntry3" input="true" name="UnitPrice" output="false" type="string"/>
+<Entry dictval.__javaType="java.lang.String" id="DictionaryEntry4" input="true" name="Pricebook2Id" output="false" type="string"/>
 </Dictionary>
 </Global>
 <Phase number="0">
@@ -88,8 +89,7 @@ output.Product2Id = inputArguments.Product2Id;
 output.UnitPrice = inputArguments.UnitPrice;
 output.IsActive = true;
 output.UseStandardPrice = false;
-output.Pricebook2Id = '01s20000001SwERAA0';
-]]></attr>
+output.Pricebook2Id = inputArguments.Pricebook2Id;]]></attr>
 </Node>
 <Node enabled="enabled" fileURL="dict:outputPayload" guiName="Map&lt;k,v&gt; WRITER" guiX="900" guiY="20" id="MAP_WRITER0" type="MAP_WRITER">
 <attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
