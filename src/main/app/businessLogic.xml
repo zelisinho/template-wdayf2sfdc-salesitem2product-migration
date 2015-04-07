@@ -76,14 +76,11 @@ payload = productList;]]></expression-component>
         </batch:on-complete>
     </batch:job>
     <sub-flow name="upsertPricebookEntryFlow">
-    <processor-chain name="findPricebookEntryIfThereIsAny" doc:name="findPricebookEntryIfThereIsAny">
                 <enricher source="#[payload]" target="#[recordVars['pricebookId']]" doc:name="store result in record var pricebookId">
                     <sfdc:query-single config-ref="Salesforce" query="SELECT Id FROM PriceBookEntry WHERE Product2Id = '#[recordVars['Product2Id']]'" doc:name="Query PriceBookEntry in Salesforce instance"/>
                 </enricher>
-            </processor-chain>
         <choice doc:name="Choice">
             <when expression="!(recordVars['pricebookId'] is NullPayload)">
-                <processor-chain name="updatePricebookEntry" doc:name="updatePricebookEntry">
                     <data-mapper:transform config-ref="Map_To_PricebookEntry" input-ref="#[recordVars[&quot;pricebookId&quot;]]" doc:name="Map To PricebookEntry update format">
                         <data-mapper:input-arguments>
                             <data-mapper:input-argument key="Id">#[recordVars['pricebookId']['Id']]</data-mapper:input-argument>
@@ -91,10 +88,8 @@ payload = productList;]]></expression-component>
                         </data-mapper:input-arguments>
                     </data-mapper:transform>
                     <logger message="PricebookEntry to update: #[payload]" level="INFO" doc:name="Log PricebookEntry to update"/>
-                </processor-chain>
             </when>
             <otherwise>
-                <processor-chain name="createPricebookEntry" doc:name="createPricebookEntry">
                     <data-mapper:transform config-ref="List_UpsertResult__To_List_PricebookEntry__1List_UpsertResult__To_List_PricebookEntry__2" doc:name="Map To PricebookEntry create format">
                         <data-mapper:input-arguments>
                             <data-mapper:input-argument key="Product2Id">#[recordVars['Product2Id']]</data-mapper:input-argument>
@@ -103,15 +98,12 @@ payload = productList;]]></expression-component>
                         </data-mapper:input-arguments>
                     </data-mapper:transform>
                     <logger message="PricebookEntry to create: #[payload]" level="INFO" doc:name="Log PricebookEntry to create"/>
-                </processor-chain>
             </otherwise>
         </choice>
 
-            <processor-chain name="upsertPricebookEntry" doc:name="upsertPricebookEntry">
                 <sfdc:upsert config-ref="Salesforce" externalIdFieldName="Id" type="PricebookEntry" doc:name="Upsert Pricebook entry in Salesforce instance">
                     <sfdc:objects ref="#[payload]"/>
                 </sfdc:upsert>
-            </processor-chain>
     </sub-flow>
     <flow name="mainFlow"  processingStrategy="synchronous" doc:description="This flow is the entry point to the Kick business logic.
 This flow should control the direction of the application, and it should be called by the different endpoints that your Kick exposes to trigger it.">
