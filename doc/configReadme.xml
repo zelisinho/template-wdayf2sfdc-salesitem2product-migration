@@ -78,7 +78,7 @@ Once your app is all set and started, supposing you choose as domain name `sfdca
 		</section>
 		<section id="api_calls">
 		<![CDATA[
-		Salesforce imposes limits on the number of API Calls that can be made. However, we make API call to Salesforce only once during migration, so this is not something to worry about. 
+		There are not any special API Calls that should be mentioned.
 ]]>
 		</section>
 		<section id="default_endpoints_xml">

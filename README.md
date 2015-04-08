@@ -172,7 +172,7 @@ In order to use this Mule Anypoint Template you need to configure properties (Cr
 + mail.subject `Batch Job Finished Report`
 
 # API Calls <a name="apicalls"/>
-Salesforce imposes limits on the number of API Calls that can be made. However, we make API call to Salesforce only once during migration, so this is not something to worry about.
+There are not any special API Calls that should be mentioned.
 
 
 # Customize It!<a name="customizeit"/>
