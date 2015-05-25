@@ -11,7 +11,7 @@
 
 	<artifactId>template-wdayf2sfdc-salesitem2product-migration</artifactId>
 	<packaging>mule</packaging>
-	<version>1.1.0</version>
+	<version>1.1.1-SNAPSHOT</version>
 	<name>template-wdayf2sfdc-salesitem2product-migration Anypoint Template Project</name>
 	
 	<properties>
@@ -95,7 +95,7 @@
 		<connection>scm:git:https://github.com/mulesoft/template-wdayf2sfdc-salesitem2product-migration.git</connection>
 		<developerConnection>scm:git:https://github.com/mulesoft/template-wdayf2sfdc-salesitem2product-migration.git</developerConnection>
 		<url>http://github.com/mulesoft/template-wdayf2sfdc-salesitem2product-migration</url>
-		<tag>v1.1.0</tag>
+		<tag>HEAD</tag>
 	</scm>
 	
 </project>
