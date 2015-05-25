@@ -5,6 +5,7 @@
 + [Use Case](#usecase)
 + [Considerations](#considerations)
 	* [Salesforce Considerations](#salesforceconsiderations)
+	* [Workday Considerations](#workdayconsiderations)
 	* [Workday Financials Considerations](#workdayfinancialsconsiderations)
 + [Run it!](#runit)
 	* [Running on premise](#runonopremise)
@@ -26,17 +27,17 @@ Note that using this template is subject to the conditions of this [License Agre
 Please review the terms of the license before downloading and using this template. In short, you are allowed to use the template for free with Mule ESB Enterprise Edition, CloudHub, or as a trial in Anypoint Studio.
 
 # Use Case <a name="usecase"/>
-As a Workday admin I want to migrate Sales items to Salesfoce Products.
+As a Workday admin I want to migrate Sales Items to Salesforce Products.
 
 This Template should serve as a foundation for the process of migrating Sales items from Workday.
 
 As implemented, this template leverages the [Batch Module](http://www.mulesoft.org/documentation/display/current/Batch+Processing).
 The batch job is divided into *Input*, *Process* and *On Complete* stages.
 
-During the *Input* stage the template will query all the existing Sales areas at Workday.
+During the *Input* stage the template will query all the existing Sales items at Workday.
 In the *Process* stage, the template queries the Salesforce for already existing Products based on the Product Names retrieved in the *Input* stage from Workday.
 The Products get inserted or updated in the Salesforce system based on the results of these queries. Afterwards, the Salesforce system is queried for Pricebook Entry, which belongs to the Product.
-If Pricebook Entry was found, then it is updated, otherwise the Pricebook Entry for the Product is created.
+If Pricebook Entry was found, it is updated, otherwise the Pricebook Entry for the Product is created.
 Lastly, the information about the migration results is sent to pre-configured e-mail recipient and output to the console as well.
 
 # Considerations <a name="considerations"/>
@@ -71,6 +72,11 @@ In order to have this template working as expected, you should be aware of your 
 There are no particular considerations for this Anypoint Template regarding Salesforce as data destination.
 
 
+## Workday Considerations <a name="workdayconsiderations"/>
+
+### As source of data
+
+There are no particular considerations for this Anypoint Template regarding Workday as data origin.
 
 
 
@@ -131,7 +137,7 @@ Complete all properties in one of the property files, for example in [mule.prod.
 
 ## Running on CloudHub <a name="runoncloudhub"/>
 While [creating your application on CloudHub](http://www.mulesoft.org/documentation/display/current/Hello+World+on+CloudHub) (Or you can do it later as a next step), you need to go to Deployment > Advanced to set all environment variables detailed in **Properties to be configured** as well as the **mule.env**.
-Once your app is all set and started, supposing you choose as domain name `sfdcaccountmigration` to trigger the use case you just need to hit `http://sfdcaccountmigration.cloudhub.io/migrateaccounts` and report will be sent to the emails configured.
+Once your app is all set and started, supposing you choose as domain name `wdayfsalesitemsmigration` to trigger the use case you just need to hit `http://wdayfsalesitemsmigration.cloudhub.io/migratesalesitems` and report will be sent to the emails configured.
 
 ### Deploying your Anypoint Template on CloudHub <a name="deployingyouranypointtemplateoncloudhub"/>
 Mule Studio provides you with really easy way to deploy your Template directly to CloudHub, for the specific steps to do so please check this [link](http://www.mulesoft.org/documentation/display/current/Deploying+Mule+Applications#DeployingMuleApplications-DeploytoCloudHub)
@@ -172,7 +178,13 @@ In order to use this Mule Anypoint Template you need to configure properties (Cr
 + mail.subject `Batch Job Finished Report`
 
 # API Calls <a name="apicalls"/>
-There are not any special API Calls that should be mentioned.
+Salesforce imposes limits on the number of API Calls that can be made. Therefore calculating this amount may be an important factor to consider. The Anypoint Template calls to the API can be calculated using the formula:
+		
+*** 4 * X  ***
+		
+Being ***X*** the number of Sales Items to be synchronized on each run.
+ 	
+For instance if 10 records are fetched from origin instance, then 40 api calls will be made (4 * 10).
 
 
 # Customize It!<a name="customizeit"/>
@@ -209,7 +221,7 @@ This template has only a [HTTP Connector](http://www.mulesoft.org/documentation/
 **HTTP Connector** - Start Report Generation
 
 + `${http.port}` is set as a property to be defined either on a property file or in CloudHub environment variables.
-+ The path configured by default is `migrateSalesareas` and you are free to change it for the one that you prefer.
++ The path configured by default is `migratesalesitems` and you are free to change it for the one that you prefer.
 + The host name for all endpoints in your CloudHub configuration should be defined as `0.0.0.0`. CloudHub will then route requests from your application domain URL to the endpoint.
 + The endpoint is configured as a *request-response* by placing it in the source section of the flow. The response will be the summary of Batch Input stage - number of Accounts loaded by the criteria specified.
 
