@@ -95,7 +95,7 @@ For instance if 10 records are fetched from origin instance, then 40 api calls w
 		<section id="default_endpoints_xml">
 		<![CDATA[
 This is the file where you will find the inbound side of your integration app.
-This Template has only an [HTTP Listener Connector](http://www.mulesoft.org/documentation/display/current/HTTP+Listener+Connector) as the way to trigger the use case.
+This Template has only a [HTTP Listener Connector](http://www.mulesoft.org/documentation/display/current/HTTP+Listener+Connector) as the way to trigger the use case.
 
 **HTTP Listener Connector** - Start Report Generation
 

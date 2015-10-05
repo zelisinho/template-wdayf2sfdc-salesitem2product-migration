@@ -217,7 +217,7 @@ The details of batch job functionality is described in the **Use Case** section.
 
 ## endpoints.xml<a name="endpointsxml"/>
 This is the file where you will find the inbound side of your integration app.
-This Template has only an [HTTP Listener Connector](http://www.mulesoft.org/documentation/display/current/HTTP+Listener+Connector) as the way to trigger the use case.
+This Template has only a [HTTP Listener Connector](http://www.mulesoft.org/documentation/display/current/HTTP+Listener+Connector) as the way to trigger the use case.
 
 **HTTP Listener Connector** - Start Report Generation
 
