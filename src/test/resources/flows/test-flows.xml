@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:wd-revenue="http://www.mulesoft.org/schema/mule/wd-revenue"
-	xmlns:data-mapper="http://www.mulesoft.org/schema/mule/ee/data-mapper" 
-	xmlns:sfdc="http://www.mulesoft.org/schema/mule/sfdc" 
-	xmlns="http://www.mulesoft.org/schema/mule/core" 
+<mule xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw"
+	xmlns:spring="http://www.springframework.org/schema/beans"
+	xmlns:wd-revenue="http://www.mulesoft.org/schema/mule/wd-revenue"
+	xmlns:sfdc="http://www.mulesoft.org/schema/mule/sfdc" xmlns="http://www.mulesoft.org/schema/mule/core"
 	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-	version="EE-3.6.2"
+	version="EE-3.7.2"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/sfdc http://www.mulesoft.org/schema/mule/sfdc/current/mule-sfdc.xsd
-http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schema/mule/ee/data-mapper/current/mule-data-mapper.xsd
-http://www.mulesoft.org/schema/mule/wd-revenue http://www.mulesoft.org/schema/mule/wd-revenue/current/mule-wd-revenue.xsd">
-    <data-mapper:config name="Map_To_PutSalesItemRequestType" transformationGraphPath="map_to_putsalesitemrequesttype.grf" doc:name="Map_To_PutSalesItemRequestType"/>
+http://www.mulesoft.org/schema/mule/wd-revenue http://www.mulesoft.org/schema/mule/wd-revenue/current/mule-wd-revenue.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd">
     
     <sub-flow name="retrieveProductSFDC" >
         <sfdc:query-single config-ref="Salesforce" query="SELECT Id, Name, Description FROM Product2 WHERE Name = '#[payload['Name']]'" doc:name="Salesforce"/>
@@ -28,10 +28,34 @@ http://www.mulesoft.org/schema/mule/wd-revenue http://www.mulesoft.org/schema/mu
     
     
     <sub-flow name="createNewSalesItemWDAYF">
-
-        <data-mapper:transform config-ref="Map_To_PutSalesItemRequestType" doc:name="Map To PutSalesItemRequestType"/>
+        <dw:transform-message doc:name="Map To PutSalesItemRequestType">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+{
+	salesItemData: {
+		currencyReference: {
+			ID: [{
+				type: "Currency_Numeric_Code",
+				value: "978"
+			}]
+		},
+		itemDescription: payload.description,
+		itemName: payload.name,
+		itemUnitPrice: payload.unitPrice,
+		revenueCategoryReference: {
+			ID: [{
+				type: "Revenue_Category_ID",
+				value: "REVENUE_CATEGORY-4"
+			}]
+		},
+		salesItemID: "SALES_ITEM-6-31"
+	}
+} as :object {
+	class : "com.workday.revenue.PutSalesItemRequestType"
+}]]></dw:set-payload>
+        </dw:transform-message>
         <wd-revenue:put-sales-item config-ref="Workday_Revenue_Management" doc:name="Workday Revenue Management"/>
-        <logger level="INFO" doc:name="Logger"/>
     </sub-flow>
     
 </mule>
