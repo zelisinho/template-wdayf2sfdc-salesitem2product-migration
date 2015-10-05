@@ -37,7 +37,7 @@ http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee
 		currencyReference: {
 			ID: [{
 				type: "Currency_Numeric_Code",
-				value: "978"
+				value: p('wdayf.currency.num.code')
 			}]
 		},
 		itemDescription: payload.description,
@@ -46,10 +46,10 @@ http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee
 		revenueCategoryReference: {
 			ID: [{
 				type: "Revenue_Category_ID",
-				value: "REVENUE_CATEGORY-4"
+				value: p('wdayf.revenue.category.id')
 			}]
 		},
-		salesItemID: "SALES_ITEM-6-31"
+		salesItemID: p('wdayf.sales.item.id')
 	}
 } as :object {
 	class : "com.workday.revenue.PutSalesItemRequestType"
