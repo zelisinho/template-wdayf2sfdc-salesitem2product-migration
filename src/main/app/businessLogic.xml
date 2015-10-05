@@ -1,60 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:spring="http://www.springframework.org/schema/beans" xmlns:wd-revenue="http://www.mulesoft.org/schema/mule/wd-revenue"
-xmlns:data-mapper="http://www.mulesoft.org/schema/mule/ee/data-mapper"
-xmlns:smtp="http://www.mulesoft.org/schema/mule/smtp"
-xmlns:batch="http://www.mulesoft.org/schema/mule/batch" 
-xmlns:sfdc="http://www.mulesoft.org/schema/mule/sfdc"
-xmlns:json="http://www.mulesoft.org/schema/mule/json" 
-xmlns="http://www.mulesoft.org/schema/mule/core" 
-xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-version="EE-3.6.2" 
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+<mule xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw"
+	xmlns:spring="http://www.springframework.org/schema/beans"
+	xmlns:wd-revenue="http://www.mulesoft.org/schema/mule/wd-revenue"
+	xmlns:smtp="http://www.mulesoft.org/schema/mule/smtp" xmlns:batch="http://www.mulesoft.org/schema/mule/batch"
+	xmlns:sfdc="http://www.mulesoft.org/schema/mule/sfdc" xmlns:json="http://www.mulesoft.org/schema/mule/json"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	version="EE-3.7.2"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/batch/current/mule-batch.xsd
 http://www.mulesoft.org/schema/mule/sfdc http://www.mulesoft.org/schema/mule/sfdc/current/mule-sfdc.xsd
 http://www.mulesoft.org/schema/mule/smtp http://www.mulesoft.org/schema/mule/smtp/current/mule-smtp.xsd
-http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schema/mule/ee/data-mapper/current/mule-data-mapper.xsd
 http://www.mulesoft.org/schema/mule/wd-revenue http://www.mulesoft.org/schema/mule/wd-revenue/current/mule-wd-revenue.xsd
 http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
-http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd">
-    <data-mapper:config name="GetSalesItemsResponseType_To_Map" transformationGraphPath="getsalesitemsresponsetype_to_map.grf" doc:name="GetSalesItemsResponseType_To_Map"/>
-    <data-mapper:config name="List_UpsertResult__To_List_PricebookEntry__1" transformationGraphPath="list_upsertresult__to_list_pricebookentry__1.grf" doc:name="List_UpsertResult__To_List_PricebookEntry__1"/>
-    <data-mapper:config name="List_UpsertResult__To_List_PricebookEntry__1List_UpsertResult__To_List_PricebookEntry__2" transformationGraphPath="list_upsertresult__to_list_pricebookentry__2.grf" doc:name="List_UpsertResult__To_List_PricebookEntry__1List_UpsertResult__To_List_PricebookEntry__2"/>
-    <data-mapper:config name="Map_To_PricebookEntry" transformationGraphPath="map_to_pricebookentry.grf" doc:name="Map_To_PricebookEntry"/>
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
 
     <batch:job name="migrateProductsBatch" max-failed-records="-1">
         <batch:threading-profile poolExhaustedAction="WAIT"/>
         <batch:input>
             <wd-revenue:get-sales-items config-ref="Workday_Revenue_Management" getSalesItemsRequest-ref="#[new com.workday.revenue.GetSalesItemsRequestType()]" doc:name="Get sales items from Workday instance"/>
-            <data-mapper:transform config-ref="GetSalesItemsResponseType_To_Map" doc:name="GetSalesItemsResponseType To Map"/>
+            <set-payload value="#[payload == null ? null : payload.responseData.salesItem]" doc:name="Retrieve Workday data"/>
 
         </batch:input>
  
         <batch:process-records>
 
             <batch:step name="getProductInSalesforceStep">
-                <enricher source="#[payload]" target="#[recordVars['productInSalesforce']]" doc:name="store result in record var 'productInSalesforce'">
-                    <sfdc:query-single config-ref="Salesforce" query="SELECT Id, LastModifiedDate FROM Product2 WHERE Name = '#[payload['Name']]'" doc:name="Query Product in Salesforce instance"/>
+                <batch:set-record-variable variableName="UnitPrice" value="#[payload.salesItemData.itemUnitPrice]" doc:name="Save data for UnitPrice in record variable"/>
+                <dw:transform-message doc:name="GetSalesItemsResponseType To Map">
+                    <dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+[{
+	Description: payload.salesItemData.itemDescription,
+	IsActive: (not payload.salesItemData.inactive) default false,
+	Name: payload.salesItemData.itemName,
+	ProductCode: payload.salesItemData.itemIdentifier
+}]]]></dw:set-payload>
+                </dw:transform-message>
+                <enricher source="#[payload == null ? null : payload.Id]" target="#[payload[0].Id]" doc:name="enrich payload with Product Id">
+                    <sfdc:query-single config-ref="Salesforce" query="SELECT Id FROM Product2 WHERE Name = '#[payload[0]['Name']]'" doc:name="Query Product in Salesforce instance"/>
+
 
                 </enricher>
  
             </batch:step>
             
 
-            <batch:step name="upsertProductInSalesforceStep" filter-expression="#[payload is NullPayload]">
-                <expression-component doc:name="Setup Product for upsert"><![CDATA[payload.put('Id', recordVars['productInSalesforce'] is NullPayload ? null : recordVars['productInSalesforce']['Id']);
-recordVars['UnitPrice'] = payload.get('UnitPrice');
-payload.remove('UnitPrice');
-java.util.List productList = new java.util.ArrayList(1);
-productList.add(payload);
-payload = productList;]]></expression-component>
+            <batch:step name="upsertProductInSalesforceStep" filter-expression="#[payload == null]">
+
                 <logger message="Product to upsert: #[payload]" level="INFO" doc:name="Log Product to upsert"/>
                 <sfdc:upsert config-ref="Salesforce" externalIdFieldName="Id" type="Product2" doc:name="Upsert Product in Salesforce">
                     <sfdc:objects ref="#[payload]"/>
                 </sfdc:upsert>
-                <data-mapper:transform config-ref="List_UpsertResult__To_List_PricebookEntry__1" doc:name="Map Result to array of Product2Ids"/>
-                <expression-component doc:name="Save data for PriceBook upsert"><![CDATA[recordVars['Product2Id']= payload.get(0)['Product2Id'];]]></expression-component>
+                <dw:transform-message doc:name="Map Result to array of Product2Ids">
+                    <dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+payload map
+{
+	Product2Id: $.id
+}]]></dw:set-payload>
+                </dw:transform-message>
 
 
             </batch:step>
@@ -70,34 +80,42 @@ payload = productList;]]></expression-component>
             		<logger message="Migration process has finished: #[payload]" level="INFO" doc:name="Log 'Migration process has finished'"/>
                 </processor-chain>
 				<processor-chain>
-                	<json:object-to-json-transformer doc:name="Transform BatchJobInstance to JSON"/>
+                	<parse-template location="./src/main/resources/email/body.html" doc:name="Parse Template"/>
 					<smtp:outbound-endpoint host="${smtp.host}" port="${smtp.port}" user="${smtp.user}" password="${smtp.password}" to="${mail.to}" from="${mail.from}" subject="${mail.subject}" responseTimeout="10000" connector-ref="gmailConnector" doc:name="Send mail"/>
 				</processor-chain>
             </scatter-gather>
         </batch:on-complete>
     </batch:job>
     <sub-flow name="upsertPricebookEntryFlow">
-                <enricher source="#[payload]" target="#[recordVars['pricebookId']]" doc:name="store result in record var pricebookId">
-                    <sfdc:query-single config-ref="Salesforce" query="SELECT Id FROM PriceBookEntry WHERE Product2Id = '#[recordVars['Product2Id']]'" doc:name="Query PriceBookEntry in Salesforce instance"/>
+                <enricher source="#[payload == null ? null : payload.Id]" target="#[payload[0].pricebookId]" doc:name="enrich payload with Pricebook Id">
+                    <sfdc:query-single config-ref="Salesforce" query="SELECT Id FROM PriceBookEntry WHERE Product2Id = '#[payload[0].Product2Id]'" doc:name="Query PriceBookEntry in Salesforce instance"/>
                 </enricher>
         <choice doc:name="Choice">
-            <when expression="!(recordVars['pricebookId'] is NullPayload)">
-                    <data-mapper:transform config-ref="Map_To_PricebookEntry" input-ref="#[recordVars[&quot;pricebookId&quot;]]" doc:name="Map To PricebookEntry update format">
-                        <data-mapper:input-arguments>
-                            <data-mapper:input-argument key="Id">#[recordVars['pricebookId']['Id']]</data-mapper:input-argument>
-                            <data-mapper:input-argument key="UnitPrice">#[recordVars['UnitPrice']]</data-mapper:input-argument>
-                        </data-mapper:input-arguments>
-                    </data-mapper:transform>
+            <when expression="payload[0].pricebookId != null">
+                <dw:transform-message doc:name="Map To PricebookEntry update format">
+                    <dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+[{
+	Id: payload[0].pricebookId,
+	UnitPrice: recordVars.UnitPrice as :string {class: "java.lang.String"}
+}]]]></dw:set-payload>
+                </dw:transform-message>
                     <logger message="PricebookEntry to update: #[payload]" level="INFO" doc:name="Log PricebookEntry to update"/>
             </when>
             <otherwise>
-                    <data-mapper:transform config-ref="List_UpsertResult__To_List_PricebookEntry__1List_UpsertResult__To_List_PricebookEntry__2" doc:name="Map To PricebookEntry create format">
-                        <data-mapper:input-arguments>
-                            <data-mapper:input-argument key="Product2Id">#[recordVars['Product2Id']]</data-mapper:input-argument>
-                            <data-mapper:input-argument key="UnitPrice">#[recordVars['UnitPrice']]</data-mapper:input-argument>
-                            <data-mapper:input-argument key="Pricebook2Id">${sfdc.integration.pricebook2Id}</data-mapper:input-argument>
-                        </data-mapper:input-arguments>
-                    </data-mapper:transform>
+                <dw:transform-message doc:name="Map To PricebookEntry create format">
+                    <dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+[{
+	Product2Id: payload[0].Product2Id,
+	UnitPrice: recordVars.UnitPrice as :string {class: "java.lang.String"},
+	IsActive: true,
+	UseStandardPrice: false,
+	Pricebook2Id: p('sfdc.integration.pricebook2Id')
+}]]]></dw:set-payload>
+                </dw:transform-message>
                     <logger message="PricebookEntry to create: #[payload]" level="INFO" doc:name="Log PricebookEntry to create"/>
             </otherwise>
         </choice>

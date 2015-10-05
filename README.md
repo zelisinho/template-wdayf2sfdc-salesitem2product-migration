@@ -1,5 +1,5 @@
 
-# Anypoint Template: Workday to Salesforce Sales Item-Product Migration
+# Anypoint Template: Workday to Salesforce Sales Item to Product Migration
 
 + [License Agreement](#licenseagreement)
 + [Use Case](#usecase)
@@ -38,7 +38,7 @@ During the *Input* stage the template will query all the existing Sales items at
 In the *Process* stage, the template queries the Salesforce for already existing Products based on the Product Names retrieved in the *Input* stage from Workday.
 The Products get inserted or updated in the Salesforce system based on the results of these queries. Afterwards, the Salesforce system is queried for Pricebook Entry, which belongs to the Product.
 If Pricebook Entry was found, it is updated, otherwise the Pricebook Entry for the Product is created.
-Lastly, the information about the migration results is sent to pre-configured e-mail recipient and output to the console as well.
+At last, the information about the migration results is sent to pre-configured e-mail recipient and output to the console as well.
 
 # Considerations <a name="considerations"/>
 
@@ -89,14 +89,14 @@ There are no particular considerations for this Anypoint Template regarding Work
 There are no particular considerations for this Anypoint Template regarding Workday Financials as data origin.
 
 # Run it! <a name="runit"/>
-Simple steps to get Workday to Salesforce Sales Item-Product Migration running.
+Simple steps to get Workday to Salesforce Sales Item to Product Migration running.
 In any of the ways you would like to run this Template this is an example of the output you'll see after hitting the HTTP endpoint:
 
 <pre>
 <h1>Batch Process initiated</h1>
 <b>ID:</b>6eea3cc6-7c96-11e3-9a65-55f9f3ae584e<br/>
 <b>Records to be processed: </b>3<br/>
-<b>Started execution on: </b>Fri Mar 19 10:08:16 CET 2015
+<b>Started execution on: </b>Mon Oct 05 10:08:16 CET 2015
 </pre>
 
 ## Running on premise <a name="runonopremise"/>
@@ -133,6 +133,7 @@ Once you have imported you Anypoint Template into Anypoint Studio you need to fo
 
 ### Running on Mule ESB stand alone <a name="runonmuleesbstandalone"/>
 Complete all properties in one of the property files, for example in [mule.prod.properties] (../master/src/main/resources/mule.prod.properties) and run your app with the corresponding environment variable to use it. To follow the example, this will be `mule.env=prod`. 
+After this, to trigger the use case you just need to hit the local HTTP connector with the port you configured in your file. If this is, for instance, `9090` then you should hit: `http://localhost:9090/migratesalesitems` and this will output a summary report and send it in the e-mail.
 
 
 ## Running on CloudHub <a name="runoncloudhub"/>
@@ -162,7 +163,7 @@ In order to use this Mule Anypoint Template you need to configure properties (Cr
 
 + wdayf.user `wdayf_user`
 + wdayf.password `wdayf_password`
-+ wdayf.endpoint `https://{your Workday domain}/ccx/service/{your tenant name}/Revenue_Management/v23.2`
++ wdayf.endpoint `https://{your Workday domain}/ccx/service/{your tenant name}/Revenue_Management/v23.1`
 
 **SMTP Services configuration**
 
@@ -171,7 +172,7 @@ In order to use this Mule Anypoint Template you need to configure properties (Cr
 + smtp.user `gmail_user`
 + smtp.password `gmail_password`
 
-**EMail Details**
+**Email Details**
 
 + mail.from `batch.migratesalesitems.migration%40mulesoft.com`
 + mail.to `cesar.garcia@mulesoft.com`
@@ -216,14 +217,14 @@ The details of batch job functionality is described in the **Use Case** section.
 
 ## endpoints.xml<a name="endpointsxml"/>
 This is the file where you will find the inbound side of your integration app.
-This template has only a [HTTP Connector](http://www.mulesoft.org/documentation/display/current/HTTP+Connector) as the way to trigger the use case.
+This Template has only a [HTTP Listener Connector](http://www.mulesoft.org/documentation/display/current/HTTP+Listener+Connector) as the way to trigger the use case.
 
-**HTTP Connector** - Start Report Generation
+**HTTP Listener Connector** - Start Report Generation
 
 + `${http.port}` is set as a property to be defined either on a property file or in CloudHub environment variables.
-+ The path configured by default is `migratesalesitems` and you are free to change it for the one that you prefer.
++ The path configured by default is `migratesalesitems` and you are free to change for the one you prefer.
 + The host name for all endpoints in your CloudHub configuration should be defined as `0.0.0.0`. CloudHub will then route requests from your application domain URL to the endpoint.
-+ The endpoint is configured as a *request-response* by placing it in the source section of the flow. The response will be the summary of Batch Input stage - number of Accounts loaded by the criteria specified.
++ The endpoint is configured as a *request-response* by placing it in the source section of the flow. The response will be the total of Sales items synced and filtered by the criteria specified.
 
 
 
