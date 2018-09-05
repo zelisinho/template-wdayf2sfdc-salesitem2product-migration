@@ -2,12 +2,13 @@
 
 <mule xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns:email="http://www.mulesoft.org/schema/mule/email"
     xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
-    xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:workday="http://www.mulesoft.org/schema/mule/workday"
     xsi:schemaLocation="
 http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd
 http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd
 http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/workday http://www.mulesoft.org/schema/mule/workday/current/mule-workday.xsd
 http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd">
 
     <http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="910654bf-9fd9-4073-bad4-cf951b7f0022">
@@ -34,6 +35,14 @@ http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mu
         <salesforce:basic-connection username="${sfdc.username}" password="${sfdc.password}"
             securityToken="${sfdc.securityToken}" />
     </salesforce:sfdc-config>
+
+    <workday:config name="Workday_Config" doc:name="Workday Config" doc:id="780c5dcd-2907-4d3f-9e56-d21041959fa1">
+        <workday:basic-connection username="${wday.user}" password="${wday.password}" tenantName="${wday.tenant}">
+            <workday:transport>
+                <workday:default-http-dispatcher-provider />
+            </workday:transport>
+        </workday:basic-connection>
+    </workday:config>
 
 </mule>
 

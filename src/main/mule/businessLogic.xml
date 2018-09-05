@@ -13,13 +13,7 @@ http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/ba
 http://www.mulesoft.org/schema/mule/workday http://www.mulesoft.org/schema/mule/workday/current/mule-workday.xsd
 http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd">
 
-<workday:config name="Workday_Config" doc:name="Workday Config" doc:id="780c5dcd-2907-4d3f-9e56-d21041959fa1" >
-		<workday:basic-connection username="${wday.user}" password="${wday.password}" tenantName="${wday.tenant}" >
-			<workday:transport >
-				<workday:default-http-dispatcher-provider />
-			</workday:transport>
-		</workday:basic-connection>
-	</workday:config>
+
 	<flow name="businessLogicFlow" doc:id="884f86c5-66e1-4701-bb9b-594c2a60abf3" >
 		<ee:transform doc:name="Set XML input" doc:id="0aeaf98c-ed24-4bae-9c81-fa52341eefea">
 			<ee:message>
