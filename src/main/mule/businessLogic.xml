@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
+      xmlns:workday="http://www.mulesoft.org/schema/mule/workday"
+      xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+      xmlns:batch="http://www.mulesoft.org/schema/mule/batch"
+      xmlns:email="http://www.mulesoft.org/schema/mule/email"
+      xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/batch/current/mule-batch.xsd
+http://www.mulesoft.org/schema/mule/workday http://www.mulesoft.org/schema/mule/workday/current/mule-workday.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd">
+
+
+	<flow name="businessLogicFlow" doc:id="884f86c5-66e1-4701-bb9b-594c2a60abf3" >
+		<ee:transform doc:name="Set XML input" doc:id="0aeaf98c-ed24-4bae-9c81-fa52341eefea">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/xml
+ns ns0 urn:com.workday/bsvc
+---
+ns0#Get_Sales_Items_Request: {
+	ns0#Request_References: [
+		ns0#Sales_Item_Reference: {
+			ns0#ID @(ns0#"type"	: 'Sales_Item_ID'): 'SALES_ITEM-6-31'
+		}
+	]
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<workday:invoke doc:id="2d348a46-acc1-4d3c-aa55-b971d43bc766" config-ref="Workday_Config" service="Revenue_Management" operation="Get_Sales_Items" doc:name="GetSalesItemsFromWorkday" />
+		<ee:transform doc:name="Retrieve Workday Data" doc:id="c7f7318b-a516-4525-b6f4-5a3c44f7e086">
+						<ee:message>
+							<ee:set-payload><![CDATA[%dw 2.0
+output application/java
+---
+payload.body.Get_Sales_Items_Response.Response_Data]]></ee:set-payload>
+						</ee:message>
+					</ee:transform>
+		<logger level="INFO" doc:name="Log Retrieving workday data" doc:id="af36e034-0d14-41c7-954a-3fc91eedb565" message="Retrieving workday data: #[output application/json ---payload]" />
+		<batch:job jobName="migrateProductsBatch" doc:id="79b373e6-1aeb-43a9-9dfe-8ac0d2f31fdc" >
+        <batch:process-records >
+				<batch:step name="getProductsFromSalesforceStep" doc:id="232087de-e311-49c1-a890-439c65ea1af2" >
+					<ee:transform doc:name="Workday Query Response To Map" doc:id="ed365b21-140d-440c-8a62-9e1b4e300520" >
+						<ee:message >
+							<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+var salesData = payload.entry.value.Sales_Item_Data
+---
+{
+	Description: salesData.Item_Description,
+	IsActive: salesData.Inactive == "0",
+	Name: salesData.Item_Name,
+	ProductCode: salesData.Sales_Item_ID
+}]]></ee:set-payload>
+						</ee:message>
+						<ee:variables >
+							<ee:set-variable variableName="UnitPrice" ><![CDATA[%dw 2.0
+output application/java
+---
+payload.entry.value.Sales_Item_Data.Item_Unit_Price]]></ee:set-variable>
+						</ee:variables>
+					</ee:transform>
+					<salesforce:query-single doc:name="Query Product in Salesforce instance" doc:id="35b37e66-b1ab-4742-b891-69bdf30777ac" config-ref="Salesforce_Config" target="sfdcId">
+						<salesforce:salesforce-query >SELECT Id FROM Product2 WHERE Name = ':name'</salesforce:salesforce-query>
+						<salesforce:parameters ><![CDATA[#[output applicaton/java
+---
+{
+	"name" : payload.Name
+}]]]></salesforce:parameters>
+					</salesforce:query-single>
+					<ee:transform doc:name="Set Id to payload" doc:id="28dc3c59-115e-4896-a712-9122ad87fc02" >
+						<ee:message >
+							<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+payload ++ vars.sfdcId]]></ee:set-payload>
+						</ee:message>
+					</ee:transform>
+            </batch:step>
+            <batch:step name="upsertProductsInSalesforceStep" doc:id="78a74ab4-9b91-416d-985a-acda2ac377eb">
+					<logger level="INFO" doc:name="Log Product to Upsert" doc:id="8e12b03d-a679-49a7-abc6-b7c786531593" message="Product to Upsert: #[output application/json ---payload]" />
+					<salesforce:upsert type="Product2" doc:name="Upsert Product in Salesforce" doc:id="b266020d-c0e4-4253-b236-b74b8a8085a2" config-ref="Salesforce_Config" externalIdFieldName="Id">
+						<salesforce:records ><![CDATA[#[[payload]]]]></salesforce:records>
+					</salesforce:upsert>
+					<logger level="INFO" doc:name="Log Upsert Product Result" doc:id="114984c7-8293-43e3-bae0-30c56879e25d" message="Log Upsert Product Result: #[output  application/json --- payload]"/>
+					<ee:transform doc:name="Map Result to Product2Id" doc:id="8fed93e7-51b0-4a96-8957-d34b88ee942f" >
+						<ee:message >
+							<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+	Product2Id: payload[0].id
+}]]></ee:set-payload>
+						</ee:message>
+					</ee:transform>
+            </batch:step>
+				<batch:step name="Batch_Step" doc:id="bdecaa71-886b-43ab-9b4a-72b222de62ec" >
+					<flow-ref doc:name="Call upsertPricebookEntryFlow" doc:id="bc46e6d9-6b62-41af-842e-343e858ee46a" name="upsertPricebookEntryFlow" />
+				</batch:step>
+        </batch:process-records>
+        <batch:on-complete >
+            <scatter-gather doc:name="Scatter-Gather" doc:id="ef2964ef-0b85-4c6c-a5ee-b834df639e7b">
+                <route>
+                    <logger level="INFO" doc:name="Migration process has finished!" doc:id="b7575d38-7dbd-4602-9186-1bbb25234896" message="Migration process has finished!" />
+                </route>
+                <route>
+                    <ee:transform doc:name="Prepare migration result email"
+                                  doc:id="c84b4bc4-5a65-41c1-9d0c-f1ebd3d8db7a">
+                        <ee:message>
+                            <ee:set-payload><![CDATA[%dw 2.0
+ output text/plain
+ ---
+ "Migration Report: \n"
+
+ ++ "\n Time [milliseconds]: " 		++ payload.elapsedTimeInMillis
+ ++ "\n Total Records: "				++ payload.totalRecords
+ ++ "\n Successful Records: "		++ payload.successfulRecords
+ ++ "\n Failed Records: "			++ payload.failedRecords
+ ++ "\n Loaded Records: "			++ payload.loadedRecords
+ ++ "\n Processed Records: " 		++ payload.processedRecords]]></ee:set-payload>
+                        </ee:message>
+                    </ee:transform>
+                    <email:send config-ref="Gmail_SMTP" doc:name="Send migration result email"
+                                doc:id="5896eaa9-dd10-47a2-a6fc-6319b11dbd06" fromAddress="${mail.from}"
+                                subject="${mail.subject}">
+                        <email:to-addresses>
+                            <email:to-address value="${mail.to}" />
+                        </email:to-addresses>
+                    </email:send>
+                </route>
+            </scatter-gather>
+        </batch:on-complete>
+    </batch:job>
+</flow>
+	<flow name="upsertPricebookEntryFlow" doc:id="7acd3d82-5bc5-4c2d-9f80-55cbfcff51e0" >
+		<salesforce:query-single doc:name="Query PriceBookEntry in Salesforce instance" doc:id="3b7007e4-7b29-414e-a906-cdcc467c9073" config-ref="Salesforce_Config" target="pricebookId">
+			<salesforce:salesforce-query>SELECT Id FROM PriceBookEntry WHERE Product2Id = ':product2Id'</salesforce:salesforce-query>
+			<salesforce:parameters><![CDATA[#[output applicaton/java
+---
+{
+	"product2Id" : payload.Product2Id
+}]]]></salesforce:parameters>
+		</salesforce:query-single>
+		<ee:transform doc:name="Prepare Data for upsert" doc:id="4cc2d132-9fb1-4c5b-a922-ebd988040843" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+if(isEmpty(vars.pricebookId))
+{
+	Product2Id: payload.Product2Id,
+	UnitPrice: vars.UnitPrice as String,
+	IsActive: true,
+	UseStandardPrice: false,
+	Pricebook2Id: p('sfdc.integration.pricebook2Id')
+}
+else 
+{
+	UnitPrice: vars.UnitPrice as String,
+	Id: vars.pricebookId.Id
+}]]></ee:set-payload>
+			</ee:message>
+			<ee:variables >
+			</ee:variables>
+		</ee:transform>
+		<logger level="INFO" doc:name="Log PricebookEntry for Upsert" doc:id="be3fddf3-ca53-4d31-ab5d-9aa60b48e08b" message="PricebookEntry for Upsert: #[output application/json --- payload]"/>
+		<salesforce:upsert type="PricebookEntry" doc:name="Upsert Pricebook entry in Salesforce instance" doc:id="9f73d662-b9bd-40e3-95d2-387f51ba5d2f" config-ref="Salesforce_Config" externalIdFieldName="Id">
+			<salesforce:records ><![CDATA[#[[payload]]]]></salesforce:records>
+		</salesforce:upsert>
+		<logger level="INFO" doc:name="Log Result" doc:id="6a2cc0a2-4f52-4845-9d99-8cc376b999a7" message="Upsert PricebookEntry Result: #[output application/json ---payload]"/>
+	</flow>
+	<flow name="mainFlow" doc:id="7c0a5bef-b3d5-442f-bff3-10d038f69a5e" >
+    <flow-ref doc:name="businessLogicFlow" doc:id="91360ede-4d71-44c7-9b64-8ee762e04ea0" name="businessLogicFlow"/>
+    <error-handler >
+        <on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="488b507d-e26c-4c56-8759-8bb4f6645d71" type="ANY">
+            <flow-ref doc:name="errorHandlingFlow" doc:id="afdaf73c-0137-4d60-84f6-5c41234771a3" name="errorHandlingFlow" />
+        </on-error-propagate>
+    </error-handler>
+</flow>
+</mule>
+
+
+        
