@@ -8,7 +8,7 @@
     </parent>
     <artifactId>template-wdayf2sfdc-salesitem2product-migration</artifactId>
     <packaging>mule-application</packaging>
-    <version>2.1.0</version>
+    <version>2.1.1-SNAPSHOT</version>
     <name>template-wdayf2sfdc-salesitem2product-migration</name>
     <build>
         <plugins>
@@ -59,8 +59,4 @@
             <layout>default</layout>
         </repository>
     </repositories>
-
-  <scm>
-    <tag>v2.1.0</tag>
-  </scm>
 </project>
