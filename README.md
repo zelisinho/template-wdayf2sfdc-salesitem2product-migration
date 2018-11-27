@@ -11,9 +11,9 @@ This template is subject to the conditions of the <a href="https://s3.amazonaws.
 <!-- Use Case (start) -->
 As a Workday admin I want to migrate Sales Items to Salesforce Products.
 
-This Template should serve as a foundation for the process of migrating Sales items from Workday.
+This template serves as a foundation for the process of migrating Sales items from Workday.
 
-As implemented, this template leverages the [Batch Module](http://www.mulesoft.org/documentation/display/current/Batch+Processing).
+As implemented, this template leverages the Mule batch module.
 The batch job is divided into *Process* and *On Complete* stages.
 
 Migration process starts from querying all the existing Sales items at Workday.
@@ -30,7 +30,7 @@ Finally during the *On Complete* stage the Template will both output statistics 
 <!-- Default Considerations (end) -->
 
 <!-- Considerations (start) -->
-There are certain pre-requisites that must be considered to run this Anypoint Template. All of them deal with the preparations in both source and destination systems, that must be made in order for all to run smoothly. **Failing to do so could lead to unexpected behavior of the template.**
+There are certain pre-requisites that must be considered to run this template. All of them deal with the preparations in both source and destination systems, that must be made for the template to run smoothly. **Failing to do so could lead to unexpected behavior of the template.**
 <!-- Considerations (end) -->
 
 
@@ -110,12 +110,12 @@ After you import your template into Anypoint Studio, follow these steps to run i
 
 ### Running on Mule Standalone
 Update the properties in one of the property files, for example in mule.prod.properties, and run your app with a corresponding environment variable. In this example, use `mule.env=prod`. 
-After this, to trigger the use case you just need to hit the local HTTP connector with the port you configured in your file. If this is, for instance, `9090` then you should hit: `http://localhost:9090/migratesalesitems` and this will output a summary report and send it in the e-mail.
+After this, to trigger the use case you just need to browse to the local HTTP connector with the port you configured in your file. If this is, for instance, `9090` then you should browse to: `http://localhost:9090/migratesalesitems` and this will output a summary report and send it in the e-mail.
 
 ## Running on CloudHub
 When creating your application in CloudHub, go to Runtime Manager > Manage Application > Properties to set the environment variables listed in "Properties to Configure" as well as the mule.env value.
 <!-- Running on Cloudhub (start) -->
-Once your app is all set and started, supposing you choose as domain name `wdayfsalesitemsmigration` to trigger the use case you just need to hit `http://wdayfsalesitemsmigration.cloudhub.io/migratesalesitems` and report will be sent to the emails configured.
+Once your app is all set and started, supposing you choose as domain name `wdayfsalesitemsmigration` to trigger the use case you just need to browse to `http://wdayfsalesitemsmigration.cloudhub.io/migratesalesitems` and report will be sent to the emails configured.
 <!-- Running on Cloudhub (end) -->
 
 ### Deploying a Template in CloudHub
@@ -128,25 +128,25 @@ In Studio, right click your project name in Package Explorer and select Anypoint
 To use this template, configure properties such as credentials, configurations, etc.) in the properties file or in CloudHub from Runtime Manager > Manage Application > Properties. The sections that follow list example values.
 ### Application Configuration
 <!-- Application Configuration (start) -->
-**Application configuration**
+**Application Configuration**
 
 + http.port `9090` 
 
-**Salesforce Connector configuration**
+**Salesforce Connector Configuration**
 
 + sfdc.username `bob.dylan@orga`
 + sfdc.password `DylanPassword123`
 + sfdc.securityToken `avsfwCUl7apQs56Xq2AKi3X`
 + sfdc.integration.pricebook2Id `standard_pricebook2_id`
 
-**Workday Connector configuration**
+**Workday Connector Configuration**
 
 + wday.user `wdayf_user`
 + wday.password `wdayf_password`
 + wday.tenant `wday_tenant`
 + wday.endpoint `https://{your Workday domain}/ccx/service/{your tenant name}/Revenue_Management/v23.1`
 
-**SMTP Services configuration**
+**SMTP Services Configuration**
 
 + smtp.host `smtp.gmail.com`
 + smtp.port `587`
@@ -162,7 +162,7 @@ To use this template, configure properties such as credentials, configurations, 
 
 # API Calls
 <!-- API Calls (start) -->
-Salesforce imposes limits on the number of API Calls that can be made. Therefore calculating this amount may be an important factor to consider. The Anypoint Template calls to the API can be calculated using the formula:
+Salesforce imposes limits on the number of API Calls that can be made. Therefore calculating this amount may be an important factor to consider. The template calls to the API can be calculated using the formula:
 		
 *** 4 * X  ***
 		
@@ -192,7 +192,7 @@ This file provides the configuration for connectors and configuration properties
 ## businessLogic.xml
 <!-- Default Business Logic XML (start) -->
 Functional aspect of the Template is implemented on this XML, directed by one flow responsible of executing the logic.
-For the purpose of this particular Template the *mainFlow* just executes a [Batch Job](http://www.mulesoft.org/documentation/display/current/Batch+Processing) which handles all the migration logic.<!-- Default Business Logic XML (end) -->
+For the purpose of this particular Template the *mainFlow* just executes a batch job which handles all the migration logic.<!-- Default Business Logic XML (end) -->
 
 <!-- Business Logic XML (start) -->
 
@@ -201,7 +201,7 @@ For the purpose of this particular Template the *mainFlow* just executes a [Batc
 ## endpoints.xml
 <!-- Default Endpoints XML (start) -->
 This is the file where you will find the inbound side of your integration app.
-This Template has only a [HTTP Listener Connector](http://www.mulesoft.org/documentation/display/current/HTTP+Listener+Connector) as the way to trigger the use case.
+This Template has only a HTTP Listener as the way to trigger the use case.
 
 **HTTP Listener Connector** - Start Report Generation
 
