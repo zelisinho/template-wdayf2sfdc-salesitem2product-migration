@@ -15,31 +15,6 @@ http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mu
 
 
 	<flow name="businessLogicFlow" doc:id="884f86c5-66e1-4701-bb9b-594c2a60abf3" >
-		<ee:transform doc:name="Set XML input" doc:id="0aeaf98c-ed24-4bae-9c81-fa52341eefea">
-			<ee:message>
-				<ee:set-payload><![CDATA[%dw 2.0
-output application/xml
-ns ns0 urn:com.workday/bsvc
----
-ns0#Get_Sales_Items_Request: {
-	ns0#Request_References: [
-		ns0#Sales_Item_Reference: {
-			ns0#ID @(ns0#"type"	: 'Sales_Item_ID'): 'SALES_ITEM-6-31'
-		}
-	]
-}]]></ee:set-payload>
-			</ee:message>
-		</ee:transform>
-		<workday:invoke doc:id="2d348a46-acc1-4d3c-aa55-b971d43bc766" config-ref="Workday_Config" service="Revenue_Management" operation="Get_Sales_Items" doc:name="GetSalesItemsFromWorkday" />
-		<ee:transform doc:name="Retrieve Workday Data" doc:id="c7f7318b-a516-4525-b6f4-5a3c44f7e086">
-						<ee:message>
-							<ee:set-payload><![CDATA[%dw 2.0
-output application/java
----
-payload.body.Get_Sales_Items_Response.Response_Data]]></ee:set-payload>
-						</ee:message>
-					</ee:transform>
-		<logger level="INFO" doc:name="Log Retrieving workday data" doc:id="af36e034-0d14-41c7-954a-3fc91eedb565" message="Retrieving workday data: #[output application/json ---payload]" />
 		<batch:job jobName="migrateProductsBatch" doc:id="79b373e6-1aeb-43a9-9dfe-8ac0d2f31fdc" >
         <batch:process-records >
 				<batch:step name="getProductsFromSalesforceStep" doc:id="232087de-e311-49c1-a890-439c65ea1af2" >
@@ -135,6 +110,33 @@ output application/java
         </batch:on-complete>
     </batch:job>
 </flow>
+	<sub-flow name="retrieveWorkdayDataSub_Flow" doc:id="884d3a66-e5e6-4037-941c-354ce6885d59" >
+		<ee:transform doc:name="Set XML input" doc:id="0aeaf98c-ed24-4bae-9c81-fa52341eefea">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/xml
+ns ns0 urn:com.workday/bsvc
+---
+ns0#Get_Sales_Items_Request: {
+	ns0#Request_References: [
+		ns0#Sales_Item_Reference: {
+			ns0#ID @(ns0#"type"	: 'Sales_Item_ID'): 'SALES_ITEM-6-31'
+		}
+	]
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<workday:revenue-management doc:name="Revenue management" doc:id="6d10a22b-fe3f-406a-b21a-a0f50f44ac60" config-ref="Workday_Config_version_30" operation="Get_Sales_Items"/>
+		<ee:transform doc:name="Retrieve Workday Data" doc:id="c7f7318b-a516-4525-b6f4-5a3c44f7e086">
+						<ee:message>
+							<ee:set-payload><![CDATA[%dw 2.0
+output application/java
+---
+payload.Get_Sales_Items_Response.Response_Data]]></ee:set-payload>
+						</ee:message>
+					</ee:transform>
+		<logger level="INFO" doc:name="Log Retrieving workday data" doc:id="af36e034-0d14-41c7-954a-3fc91eedb565" message="Retrieving workday data: #[output application/json ---payload]" />
+	</sub-flow>
 	<flow name="upsertPricebookEntryFlow" doc:id="7acd3d82-5bc5-4c2d-9f80-55cbfcff51e0" >
 		<salesforce:query-single doc:name="Query PriceBookEntry in Salesforce instance" doc:id="3b7007e4-7b29-414e-a906-cdcc467c9073" config-ref="Salesforce_Config" target="pricebookId">
 			<salesforce:salesforce-query>SELECT Id FROM PriceBookEntry WHERE Product2Id = ':product2Id'</salesforce:salesforce-query>
@@ -173,7 +175,8 @@ else
 		<logger level="INFO" doc:name="Log Result" doc:id="6a2cc0a2-4f52-4845-9d99-8cc376b999a7" message="Upsert PricebookEntry Result: #[output application/json ---payload]"/>
 	</flow>
 	<flow name="mainFlow" doc:id="7c0a5bef-b3d5-442f-bff3-10d038f69a5e" >
-    <flow-ref doc:name="businessLogicFlow" doc:id="91360ede-4d71-44c7-9b64-8ee762e04ea0" name="businessLogicFlow"/>
+    <flow-ref doc:name="retrieveWorkdayDataSub_FLow" doc:id="4933eae7-8057-454b-aa83-7d4f447bdbd9" name="retrieveWorkdayDataSub_Flow"/>
+	<flow-ref doc:name="businessLogicFlow" doc:id="91360ede-4d71-44c7-9b64-8ee762e04ea0" name="businessLogicFlow"/>
     <error-handler >
         <on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="488b507d-e26c-4c56-8759-8bb4f6645d71" type="ANY">
             <flow-ref doc:name="errorHandlingFlow" doc:id="afdaf73c-0137-4d60-84f6-5c41234771a3" name="errorHandlingFlow" />
