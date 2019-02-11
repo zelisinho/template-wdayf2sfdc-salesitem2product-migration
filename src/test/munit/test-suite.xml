@@ -55,7 +55,7 @@ uuid()[0 to 7]]]></ee:set-variable>
 	</munit:before-test>
 	<munit:test name="test-suiteTest" description="MUnit Test" doc:id="db30c410-20d9-4b2f-9d2d-f87ddee5d3c2" >
 		<munit:execution >
-			<ee:transform doc:name="Transform Message" doc:id="a722ca3f-9c1e-4b15-af60-cae2b3d36f02" >
+			<ee:transform doc:name="Preprare test data" doc:id="a722ca3f-9c1e-4b15-af60-cae2b3d36f02" >
 				<ee:message >
 					<ee:set-payload ><![CDATA[%dw 2.0
 output application/java
