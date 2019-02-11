@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting"
+	xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit"
+	xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
+http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd">
+	<munit:config name="test-suite.xml" />
+	<configuration-properties doc:name="Configuration properties"
+		doc:id="49ce0b6f-4814-498a-a623-0a52c910b4a8" file="mule.test.properties" />
+	<munit:before-test name="test-suiteBefore_Test"
+		description="Before tests actions" doc:id="32d91165-b922-44c1-b7aa-28c540cc4e9e">
+		<ee:transform doc:name="Prepare test variables"
+			doc:id="29fda83b-f3cb-45fe-aad5-5f8b06815d18">
+			<ee:message >
+			</ee:message>
+			<ee:variables>
+				<ee:set-variable variableName="testUnitPrice" ><![CDATA[%dw 2.0
+output application/java
+---
+randomInt(8000) + 1000]]></ee:set-variable>
+				<ee:set-variable variableName="testDescription"><![CDATA[%dw 2.0
+output application/java
+---
+uuid()[0 to 7]]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<flow-ref doc:name="retrieveWorkdayDataSub_Flow" doc:id="dc058607-1f78-4f87-9aa9-5bd78c26884d" name="retrieveWorkdayDataSub_Flow"/>
+		<set-variable value="#[payload]" doc:name="workdayData" doc:id="63f2d795-8fdd-4869-840b-e2c78fbe6421" variableName="workdayData"/>
+		<salesforce:query-single doc:name="Query untouched Product in Salesforce instance" doc:id="e8bc47d5-3b03-48f7-9a75-1786b0552cb7" config-ref="Salesforce_Config" target="untouchedSFDCProduct" >
+			<salesforce:salesforce-query >SELECT Id, Description FROM Product2 WHERE Name = ':name'</salesforce:salesforce-query>
+			<salesforce:parameters ><![CDATA[#[output application/java
+---
+{
+	"name" : vars.workdayData.Sales_Item.Sales_Item_Data.Item_Name
+}]]]></salesforce:parameters>
+		</salesforce:query-single>
+		<salesforce:query-single doc:name="Query untouched PriceBookEntry in Salesforce instance" doc:id="92f47870-8592-4612-8414-2d6824da316e" config-ref="Salesforce_Config" target="untouchedSFDCPrice" >
+			<salesforce:salesforce-query >SELECT Id, UnitPrice FROM PriceBookEntry WHERE Product2Id = ':product2Id'</salesforce:salesforce-query>
+			<salesforce:parameters ><![CDATA[#[output application/java
+---
+{
+	"product2Id" : vars.untouchedSFDCProduct.Id
+}]]]></salesforce:parameters>
+		</salesforce:query-single>
+		<munit-tools:mock-when doc:name="Mock email sending" doc:id="f5e391dd-a174-44d9-9678-6012e3cafe28" processor="email:send"/>
+	</munit:before-test>
+	<munit:test name="test-suiteTest" description="MUnit Test" doc:id="db30c410-20d9-4b2f-9d2d-f87ddee5d3c2" >
+		<munit:execution >
+			<ee:transform doc:name="Transform Message" doc:id="a722ca3f-9c1e-4b15-af60-cae2b3d36f02" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+  "Sales_Item": {
+    "Sales_Item_Data": {
+   	  "Sales_Item_ID": vars.workdayData.Sales_Item.Sales_Item_Data.Sales_Item_ID,
+      "Item_Name": vars.workdayData.Sales_Item.Sales_Item_Data.Item_Name,
+      "Item_Description": vars.testDescription,
+      "Inactive": vars.workdayData.Sales_Item.Sales_Item_Data.Inactive,
+      "Item_Unit_Price": vars.testUnitPrice,
+    }
+  }
+}]]></ee:set-payload>
+				</ee:message>
+			</ee:transform>
+			<flow-ref doc:name="businessLogicFlow" doc:id="06eddd1a-2dab-4c68-ae12-22f4b6671154" name="businessLogicFlow"/>
+			<scripting:execute engine="groovy" doc:name="Wait 60 second to finish business logic" doc:id="1a1bc9c7-2d90-4469-8cfb-4cbfe3db2a57" >
+				<scripting:code >sleep(60000)</scripting:code>
+			</scripting:execute>
+			<salesforce:query-single doc:name="Query changed Product in Salesforce instance" doc:id="34ff1185-1c2c-4d3c-bd46-a6acbd7b8b37" config-ref="Salesforce_Config" target="changedSFDCProduct" >
+				<salesforce:salesforce-query >SELECT Id, Description FROM Product2 WHERE Name = ':name'</salesforce:salesforce-query>
+				<salesforce:parameters ><![CDATA[#[output application/java
+---
+{
+	"name" : vars.workdayData.Sales_Item.Sales_Item_Data.Item_Name
+}]]]></salesforce:parameters>
+			</salesforce:query-single>
+			<salesforce:query-single doc:name="Query changed PriceBookEntry in Salesforce instance" doc:id="b920fdf0-7806-44e5-8383-3eb6aa491882" config-ref="Salesforce_Config" target="changedSFDCPrice" >
+				<salesforce:salesforce-query >SELECT Id, UnitPrice FROM PriceBookEntry WHERE Product2Id = ':product2Id'</salesforce:salesforce-query>
+				<salesforce:parameters ><![CDATA[#[output application/java
+---
+{
+	"product2Id" : vars.untouchedSFDCProduct.Id
+}]]]></salesforce:parameters>
+			</salesforce:query-single>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that description has changed" doc:id="36713fb5-da76-4382-86c5-4d568ccfca67" expression="#[vars.changedSFDCProduct.Description]" is="#[MunitTools::equalTo(vars.testDescription)]" message="Description has not changed"/>
+			<munit-tools:assert-that doc:name="Assert that unit price has changed" doc:id="aa745583-cf63-4105-a8bb-bc669a53356d" is="#[MunitTools::equalTo(vars.testUnitPrice)]" expression="#[vars.changedSFDCPrice.UnitPrice as Number]" message="Unit price has not changed"/>
+		</munit:validation>
+	</munit:test>
+	<munit:after-test name="test-suiteAfter_Test" description="After tests actions" doc:id="de10fd82-4dd5-4fc4-ba2a-bbdc0367ed3b" >
+		<salesforce:update type="Product2" doc:name="Revert Product" doc:id="6d104aed-5185-4f70-b6a1-c7ca31e7cde1" config-ref="Salesforce_Config">
+			<salesforce:records ><![CDATA[#[[vars.untouchedSFDCProduct]]]]></salesforce:records>
+		</salesforce:update>
+		<salesforce:update type="PricebookEntry" doc:name="Revert PriceBookEntry" doc:id="f688bf25-d858-4509-909b-82cb158ca0bb" config-ref="Salesforce_Config">
+			<salesforce:records ><![CDATA[#[[vars.untouchedSFDCPrice]]]]></salesforce:records>
+		</salesforce:update>
+	</munit:after-test>
+
+
+</mule>
