@@ -15,12 +15,12 @@
 	<global-property name="mule.env" value="dev" doc:id="3d75c51c-6f2d-4b21-8553-0d54e4ac0bcc" doc:name="Global Property" />
     <configuration-properties file="common.properties" doc:id="dffa4da7-cc5c-4ecb-922e-1115b4387354" doc:name="Configuration properties" />
     <configuration-properties file="mule.${mule.env}.properties" doc:id="674beef8-9485-40a7-99b9-0685c9b7e863" doc:name="Configuration properties" />
-    
+
     <salesforce:sfdc-config name="Salesforce_Config" doc:id="91a37610-996e-4bff-84d5-a0316c6e3284" doc:name="Salesforce Config">
         <salesforce:basic-connection password="${sfdc.password}" securityToken="${sfdc.securityToken}" username="${sfdc.username}" />
     </salesforce:sfdc-config>
 	<workday:config-version-30-config name="Workday_Config_version_30" doc:name="Workday Config version 30" doc:id="dcf636d8-5567-4df2-94c3-a4bb770e326a" >
-		<workday:basic-authentication-api-v30-connection username="${wday.user}" password="${wday.password}" tenantName="${wday.tenant}" hostName="${wday.host}" responseTimeout="25000"/>
+		<workday:basic-authentication-api-v30-connection username="${wday.user}" password="${wday.password}" tenantName="${wday.tenant}" hostName="${wday.host}" responseTimeout="${wday.responseTimeout}"/>
 	</workday:config-version-30-config>
 
 </mule>
