@@ -1,8 +1,8 @@
 
-# Anypoint Template: Workday to Salesforce Sales Item to Product Migration	
+# Anypoint Template: Workday to Salesforce Sales Item to Product Migration
 
 <!-- Header (start) -->
-Moves a large set of sales items from Workday to Salesforce. You can trigger this manually or programmatically with an HTTP call. 
+Moves a large set of sales items from Workday to Salesforce. You can trigger this manually or programmatically with an HTTP call.
 
 Sales items are upserted so that the migration can be run multiple times without creating duplicate records. This template uses batch to efficiently process many records at a time.
 
@@ -15,7 +15,7 @@ Install Workday Financials - Revenue Management module which you can find on the
 <!-- Header (end) -->
 
 # License Agreement
-This template is subject to the conditions of the <a href="https://s3.amazonaws.com/templates-examples/AnypointTemplateLicense.pdf">MuleSoft License Agreement</a>. Review the terms of the license before downloading and using this template. You can use this template for free with the Mule Enterprise Edition, CloudHub, or as a trial in Anypoint Studio. 
+This template is subject to the conditions of the <a href="https://s3.amazonaws.com/templates-examples/AnypointTemplateLicense.pdf">MuleSoft License Agreement</a>. Review the terms of the license before downloading and using this template. You can use this template for free with the Mule Enterprise Edition, CloudHub, or as a trial in Anypoint Studio.
 # Use Case
 <!-- Use Case (start) -->
 As a Workday admin I want to migrate Sales Items to Salesforce Products.
@@ -99,7 +99,7 @@ After you import your template into Anypoint Studio, follow these steps to run i
 <!-- Running on Studio (end) -->
 
 ### Run on Mule Standalone
-Update the properties in one of the property files, for example in mule.prod.properties, and run your app with a corresponding environment variable. In this example, use `mule.env=prod`. 
+Update the properties in one of the property files, for example in mule.prod.properties, and run your app with a corresponding environment variable. In this example, use `mule.env=prod`.
 After this, to trigger the use case, browse to the local HTTP connector with the port you configured in your file. If this is, for instance `9090`, browse to: `http://localhost:9090/migratesalesitems` and this outputs a summary report and sends it in email.
 
 ## Run on CloudHub
@@ -120,7 +120,7 @@ To use this template, configure properties such as credentials, configurations, 
 <!-- Application Configuration (start) -->
 ### Application Configuration
 
-- http.port `9090` 
+- http.port `9090`
 
 ### Salesforce Connector Configuration
 
@@ -135,6 +135,7 @@ To use this template, configure properties such as credentials, configurations, 
 - wday.password `wdayf_password`
 - wday.tenant `wday_tenant`
 - wday.endpoint `https://{your Workday domain}/ccx/service/{your tenant name}/Revenue_Management/v23.1`
+- wday.responseTimeout `Workday_User.response_timeout`
 
 ### SMTP Services Configuration
 
@@ -153,9 +154,9 @@ To use this template, configure properties such as credentials, configurations, 
 # API Calls
 <!-- API Calls (start) -->
 Salesforce imposes limits on the number of API calls that can be made. Therefore calculating this amount may be an important factor to consider. The template calls to the API can be calculated using this formula:
-		
+
 - *** 4 * X  *** -- Where ***X*** is the number of sales items to synchronize on each run.
- 	
+
 For instance if 10 records are fetched from origin instance, then 40 API calls are made (4 * 10).
 <!-- API Calls (end) -->
 
