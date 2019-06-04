@@ -135,7 +135,7 @@ To use this template, configure properties such as credentials, configurations, 
 - wday.password `wdayf_password`
 - wday.tenant `wday_tenant`
 - wday.host `wday_host`
-- wday.responseTimeout `20000`
+- wday.responseTimeout `2000`
 
 ### SMTP Services Configuration
 
