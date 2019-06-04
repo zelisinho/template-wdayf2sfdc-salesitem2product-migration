@@ -54,7 +54,8 @@ After this, to trigger the use case you just need to browse to the local HTTP co
 + wday.user `wdayf_user`
 + wday.password `wdayf_password`
 + wday.tenant `wday_tenant`
-+ wday.endpoint `https://{your Workday domain}/ccx/service/{your tenant name}/Revenue_Management/v23.1`
++ wday.host `wday_host`
++ wday.responseTimeout `2000`
 
 **SMTP Services Configuration**
 
